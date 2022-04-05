@@ -16,6 +16,7 @@ var jumpPressed = false
 var jumpHeld = false
 var kicked = false
 var missKicked = false
+var drop = false
 var kickables = []
 onready var PlayerSprite = get_node("PlayerSprite")
 onready var KickArea = get_node("KickArea")
@@ -52,6 +53,9 @@ func player_inputs():
 		jumpHeld = true
 	else:
 		jumpHeld = false
+	
+	if Input.is_action_just_pressed("drop"):
+		drop = true
 
 func animation():
 	if kickables.empty():
@@ -71,6 +75,13 @@ func _process(_delta):
 func _physics_process(_delta):
 	var grav = 0
 	var newVel = velocity
+	
+	set_collision_mask_bit(3, true)
+	
+	if drop:
+		set_collision_mask_bit(3, false)
+		drop = false
+	
 	if is_on_floor() or is_on_wall():
 		kicked = false
 		missKicked = false
