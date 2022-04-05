@@ -71,7 +71,7 @@ func _process(_delta):
 func _physics_process(_delta):
 	var grav = 0
 	var newVel = velocity
-	if is_on_floor():
+	if is_on_floor() or is_on_wall():
 		kicked = false
 		missKicked = false
 	
@@ -106,6 +106,14 @@ func _physics_process(_delta):
 	if jumpPressed:
 		if is_on_floor():
 			velocity.y = -jumpForce
+		elif is_on_wall():
+			kicked = true
+			if get_slide_collision(0).get_position() < global_position:
+				velocity.x = 1
+			if get_slide_collision(0).get_position() > global_position:
+				velocity.x = -1
+			velocity.y = -1
+			velocity = velocity.normalized() * kickForce
 		elif !missKicked:
 			if !kickables.empty():
 				kicked = true
