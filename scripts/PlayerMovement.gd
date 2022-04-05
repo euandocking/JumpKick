@@ -5,6 +5,7 @@ var accel = 200
 var maxRunSpeed = 500
 var decel = 100
 var jumpForce = 1000
+var kickForce = 1200
 var jumpGrav = 40
 var upGrav = 60
 var downGrav = 70
@@ -83,7 +84,10 @@ func _physics_process(_delta):
 		if newVel.x > -maxRunSpeed:
 			newVel.x -= accel
 	else:
-		newVel.x -= sign(newVel.x) * decel
+		if abs(newVel.x) > accel:
+			newVel.x -= sign(newVel.x) * decel
+		else:
+			newVel.x = 0
 	
 	if !kicked:
 		velocity = newVel
@@ -105,7 +109,7 @@ func _physics_process(_delta):
 		elif !missKicked:
 			if !kickables.empty():
 				kicked = true
-				velocity = Vector2(-faceDir, -1)*jumpForce
+				velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
 			else:
 				missKicked = true
 	
