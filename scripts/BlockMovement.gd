@@ -1,9 +1,12 @@
 extends KinematicBody2D
 
 #variables
-var decel = 50
+var decel = 25
 var grav = 50
 var velocity = Vector2.ZERO
+
+func set_velocity(vel):
+	velocity = vel
 
 # Called when the node enters the scene tree for the first time.
 #func _ready():
@@ -14,8 +17,10 @@ var velocity = Vector2.ZERO
 #	pass
 
 func _physics_process(_delta):
-	if velocity.x != 0:
-		velocity.x -= sign(velocity.x) * decel
+	if abs(velocity.x) > decel:
+			velocity.x -= sign(velocity.x) * decel
+	else:
+		velocity.x = 0
 	
 	velocity.y += grav
 	

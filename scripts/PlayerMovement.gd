@@ -95,7 +95,7 @@ func _physics_process(_delta):
 		if newVel.x > -maxRunSpeed:
 			newVel.x -= accel
 	else:
-		if abs(newVel.x) > accel:
+		if abs(newVel.x) > decel:
 			newVel.x -= sign(newVel.x) * decel
 		else:
 			newVel.x = 0
@@ -129,6 +129,7 @@ func _physics_process(_delta):
 			if !kickables.empty():
 				kicked = true
 				velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
+				kickables[0].set_velocity(-velocity)
 			else:
 				missKicked = true
 	
