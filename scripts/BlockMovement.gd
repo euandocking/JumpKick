@@ -7,6 +7,9 @@ var velocity = Vector2.ZERO
 
 func set_velocity(vel):
 	velocity = vel
+	
+func kicked(vel):
+	velocity = vel
 
 # Called when the node enters the scene tree for the first time.
 #func _ready():
