@@ -2,8 +2,8 @@ extends KinematicBody2D
 
 #variables
 var accel = 200
-var maxRunSpeed = 500
-var decel = 100
+var maxRunSpeed = 600
+var decel = 50
 var jumpForce = 1000
 var kickForce = 1200
 var jumpGrav = 40
@@ -17,6 +17,7 @@ var jumpHeld = false
 var kicked = false
 var missKicked = false
 var drop = false
+var enemiesTouching = []
 var kickables = []
 onready var PlayerSprite = get_node("PlayerSprite")
 onready var KickArea = get_node("KickArea")
@@ -67,6 +68,10 @@ func animation():
 	elif faceDir == -1:
 		PlayerSprite.set_flip_h(true)
 
+func die():
+	print("lose")
+	get_tree().reload_current_scene()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	player_inputs()
@@ -75,6 +80,10 @@ func _process(_delta):
 func _physics_process(_delta):
 	var grav = 0
 	var newVel = velocity
+	
+	if !enemiesTouching.empty():
+		if is_on_floor():
+			die()
 	
 	set_collision_mask_bit(3, true)
 	
@@ -87,23 +96,21 @@ func _physics_process(_delta):
 		missKicked = false
 	
 	if runDir == 1:
-		KickArea.set_position(Vector2(32,32))
 		if newVel.x < maxRunSpeed:
 			newVel.x += accel
 	elif runDir == -1:
-		KickArea.set_position(Vector2(-32,32))
 		if newVel.x > -maxRunSpeed:
 			newVel.x -= accel
+	
+	if abs(newVel.x) > decel:
+		newVel.x -= sign(newVel.x) * decel
 	else:
-		if abs(newVel.x) > decel:
-			newVel.x -= sign(newVel.x) * decel
-		else:
-			newVel.x = 0
+		newVel.x = 0
 	
 	if !kicked:
 		velocity = newVel
 	else:
-		velocity = velocity.linear_interpolate(newVel, 0.5)
+		velocity = velocity.linear_interpolate(newVel, 0.3)
 	
 	if velocity.y < 0:
 		if jumpHeld:
@@ -129,7 +136,8 @@ func _physics_process(_delta):
 			if !kickables.empty():
 				kicked = true
 				velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
-				kickables[0].set_velocity(-velocity)
+				for kickable in kickables:
+					kickable.kicked(-velocity)
 			else:
 				missKicked = true
 	
@@ -142,3 +150,11 @@ func _on_KickArea_body_entered(body):
 
 func _on_KickArea_body_exited(body):
 	kickables.erase(body)
+
+
+func _on_HurtArea_body_entered(body):
+	enemiesTouching.append(body)
+
+
+func _on_HurtArea_body_exited(body):
+	enemiesTouching.erase(body)
