@@ -17,6 +17,8 @@ var jumpHeld = false
 var kicked = false
 var missKicked = false
 var drop = false
+var touchingLeftWall = false
+var touchingRightWall = false
 var enemiesTouching = []
 var kickables = []
 onready var PlayerSprite = get_node("PlayerSprite")
@@ -124,22 +126,19 @@ func _physics_process(_delta):
 	if jumpPressed:
 		if is_on_floor():
 			velocity.y = -jumpForce
-		elif is_on_wall():
+		else:
 			kicked = true
-			if get_slide_collision(0).get_position() < global_position:
-				velocity.x = 1
-			if get_slide_collision(0).get_position() > global_position:
-				velocity.x = -1
-			velocity.y = -1
-			velocity = velocity.normalized() * kickForce
-		elif !missKicked:
-			if !kickables.empty():
-				kicked = true
-				velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
-				for kickable in kickables:
-					kickable.kicked(-velocity)
-			else:
-				missKicked = true
+			if touchingLeftWall:
+				velocity = Vector2(1, -1).normalized()*kickForce
+			elif touchingRightWall:
+				velocity = Vector2(-1, -1).normalized()*kickForce
+			elif !missKicked:
+				if !kickables.empty():
+					velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
+					for kickable in kickables:
+						kickable.kicked(-velocity)
+				else:
+					missKicked = true
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -158,3 +157,19 @@ func _on_HurtArea_body_entered(body):
 
 func _on_HurtArea_body_exited(body):
 	enemiesTouching.erase(body)
+
+
+func _on_RightCheckArea_body_entered(body):
+	touchingRightWall = true
+
+
+func _on_RightCheckArea_body_exited(body):
+	touchingRightWall = false
+
+
+func _on_LeftCheckArea_body_entered(body):
+	touchingLeftWall = true
+
+
+func _on_LeftCheckArea_body_exited(body):
+	touchingLeftWall = false

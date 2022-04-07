@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://sprites/player.png" type="Texture" id=1]
 [ext_resource path="res://scripts/PlayerMovement.gd" type="Script" id=2]
@@ -11,6 +11,9 @@ extents = Vector2( 64, 64 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 28, 28 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 4, 32 )
 
 [node name="PlayerBody" type="KinematicBody2D"]
 collision_mask = 11
@@ -36,7 +39,27 @@ collision_mask = 16
 [node name="HurtCollision" type="CollisionShape2D" parent="HurtArea"]
 shape = SubResource( 3 )
 
+[node name="LeftCheckArea" type="Area2D" parent="."]
+position = Vector2( -36, 0 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="LeftCheckCollision" type="CollisionShape2D" parent="LeftCheckArea"]
+shape = SubResource( 4 )
+
+[node name="RightCheckArea" type="Area2D" parent="."]
+position = Vector2( 36, 0 )
+collision_layer = 0
+collision_mask = 2
+
+[node name="RightCheckCollision" type="CollisionShape2D" parent="RightCheckArea"]
+shape = SubResource( 4 )
+
 [connection signal="body_entered" from="KickArea" to="." method="_on_KickArea_body_entered"]
 [connection signal="body_exited" from="KickArea" to="." method="_on_KickArea_body_exited"]
 [connection signal="body_entered" from="HurtArea" to="." method="_on_HurtArea_body_entered"]
 [connection signal="body_exited" from="HurtArea" to="." method="_on_HurtArea_body_exited"]
+[connection signal="body_entered" from="LeftCheckArea" to="." method="_on_LeftCheckArea_body_entered"]
+[connection signal="body_exited" from="LeftCheckArea" to="." method="_on_LeftCheckArea_body_exited"]
+[connection signal="body_entered" from="RightCheckArea" to="." method="_on_RightCheckArea_body_entered"]
+[connection signal="body_exited" from="RightCheckArea" to="." method="_on_RightCheckArea_body_exited"]
