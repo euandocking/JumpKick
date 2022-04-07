@@ -3,6 +3,7 @@ extends Node
 
 onready var enemies = get_children()
 onready var enemiesLeft = enemies.size()
+signal enemiesDefeated
 
 
 # Called when the node enters the scene tree for the first time.
@@ -18,5 +19,4 @@ func _process(delta):
 func _on_Enemy_died():
 	enemiesLeft -= 1
 	if enemiesLeft == 0:
-		print("win")
-		get_tree().reload_current_scene()
+		emit_signal("enemiesDefeated")
