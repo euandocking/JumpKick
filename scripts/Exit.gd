@@ -1,6 +1,5 @@
 extends Area2D
 
-
 var playerInArea = false
 var enemiesDefeated = false
 
@@ -19,6 +18,7 @@ func _on_ExitArea_body_exited(body):
 
 
 func _on_Enemies_enemiesDefeated():
+	print("enemies defeated")
 	enemiesDefeated = true
 	if playerInArea:
 		win()

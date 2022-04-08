@@ -1,52 +1,57 @@
-extends KinematicBody2D
+extends "Actor.gd"
 
 #variables
-var accel = 200
-var maxRunSpeed = 600
-var decel = 50
-var jumpForce = 1000
-var kickForce = 1200
 var jumpGrav = 40
 var upGrav = 60
 var downGrav = 70
-var velocity = Vector2.ZERO
-var runDir = 0
+
+var jumpForce = 1000
+var kickForce = 1200
+
+var newVel = Vector2.ZERO
+
 var faceDir = 1
 var jumpPressed = false
 var jumpHeld = false
+var drop = false
+
 var kicked = false
 var missKicked = false
-var drop = false
+
 var touchingLeftWall = false
 var touchingRightWall = false
-var enemiesTouching = []
 var kickables = []
+
+var enemiesTouching = []
+
 onready var PlayerSprite = get_node("PlayerSprite")
 onready var KickArea = get_node("KickArea")
+
 var playerTexture = preload("res://sprites/player.png")
 var playerKickReadyTexture = preload("res://sprites/player_kick_ready.png")
 
-# Called when the node enters the scene tree for the first time.
-#func _ready():
-#	pass
+func _ready():
+	accel = 200
+	maxAccelSpeed = 600
+	decel = 50
 
 func player_inputs():
 	if Input.is_action_just_pressed("left"):
-		runDir = -1
+		accelDir = -1
 	if Input.is_action_just_pressed("right"):
-		runDir = 1
+		accelDir = 1
 	if Input.is_action_just_released("left"):
 		if Input.is_action_pressed("right"):
-			runDir = 1
+			accelDir = 1
 		else:
-			runDir = 0
+			accelDir = 0
 	if Input.is_action_just_released("right"):
 		if Input.is_action_pressed("left"):
-			runDir = -1
+			accelDir = -1
 		else:
-			runDir = 0
-	if runDir != 0:
-		faceDir = runDir
+			accelDir = 0
+	if accelDir != 0:
+		faceDir = accelDir
 	
 	if Input.is_action_just_pressed("jump"):
 		jumpPressed = true
@@ -80,40 +85,30 @@ func _process(_delta):
 	animation()
 
 func _physics_process(_delta):
-	var grav = 0
-	var newVel = velocity
-	
+	#die
 	if !enemiesTouching.empty():
 		if is_on_floor():
 			die()
 	
+	#one way collision check
 	set_collision_mask_bit(3, true)
-	
 	if drop:
 		set_collision_mask_bit(3, false)
 		drop = false
 	
+	#kick/miss reset
 	if is_on_floor() or is_on_wall():
 		kicked = false
 		missKicked = false
 	
-	if runDir == 1:
-		if newVel.x < maxRunSpeed:
-			newVel.x += accel
-	elif runDir == -1:
-		if newVel.x > -maxRunSpeed:
-			newVel.x -= accel
-	
-	if abs(newVel.x) > decel:
-		newVel.x -= sign(newVel.x) * decel
-	else:
-		newVel.x = 0
-	
+	#alt velocity check
+	var newVel = velocity
 	if !kicked:
 		velocity = newVel
 	else:
 		velocity = velocity.linear_interpolate(newVel, 0.3)
 	
+	#grav assignment for smoother jump
 	if velocity.y < 0:
 		if jumpHeld:
 			grav = jumpGrav
@@ -121,55 +116,55 @@ func _physics_process(_delta):
 			grav = upGrav
 	else:
 		grav = downGrav
-	velocity.y += grav
 	
+	#jump/kick
 	if jumpPressed:
+		#jump
 		if is_on_floor():
 			velocity.y = -jumpForce
+		#kick
 		else:
 			kicked = true
+			
+			#wall kick
 			if touchingLeftWall:
 				velocity = Vector2(1, -1).normalized()*kickForce
 			elif touchingRightWall:
 				velocity = Vector2(-1, -1).normalized()*kickForce
+			
+			#kick
 			elif !missKicked:
+				#kick
 				if !kickables.empty():
 					velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
 					for kickable in kickables:
 						kickable.kicked(-velocity)
+				
+				#miss kick
 				else:
 					missKicked = true
 	
-	velocity = move_and_slide(velocity, Vector2.UP)
+	move()
 
 
+#kickable signals
 func _on_KickArea_body_entered(body):
 	kickables.append(body)
-
-
 func _on_KickArea_body_exited(body):
 	kickables.erase(body)
 
-
+#enemy signals
 func _on_HurtArea_body_entered(body):
 	enemiesTouching.append(body)
-
-
 func _on_HurtArea_body_exited(body):
 	enemiesTouching.erase(body)
 
-
+#wall checks
 func _on_RightCheckArea_body_entered(body):
 	touchingRightWall = true
-
-
 func _on_RightCheckArea_body_exited(body):
 	touchingRightWall = false
-
-
 func _on_LeftCheckArea_body_entered(body):
 	touchingLeftWall = true
-
-
 func _on_LeftCheckArea_body_exited(body):
 	touchingLeftWall = false

@@ -80,8 +80,7 @@ position = Vector2( 1499, 531 )
 script = ExtResource( 7 )
 
 [node name="Enemy" parent="Enemies" instance=ExtResource( 5 )]
-position = Vector2( 741, 523 )
-rotation = -0.00194746
+position = Vector2( 635, 503 )
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 1251, 523 )
@@ -93,14 +92,6 @@ position = Vector2( 2939, 519 )
 rotation = -0.00194746
 PatrolPath = NodePath("../../Paths/PatrolPath2")
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 149, 509 )
-
-[node name="MainCamera" type="Camera2D" parent="."]
-position = Vector2( 220, 368 )
-current = true
-script = ExtResource( 6 )
-
 [node name="Paths" type="Node" parent="."]
 
 [node name="PatrolPath" type="Path2D" parent="Paths"]
@@ -111,6 +102,14 @@ curve = SubResource( 4 )
 
 [node name="Exit" parent="." instance=ExtResource( 8 )]
 position = Vector2( 3616, 544 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 149, 509 )
+
+[node name="MainCamera" type="Camera2D" parent="."]
+position = Vector2( 220, 368 )
+current = true
+script = ExtResource( 6 )
 
 [connection signal="enemiesDefeated" from="Enemies" to="Exit" method="_on_Enemies_enemiesDefeated"]
 [connection signal="died" from="Enemies/Enemy" to="Enemies" method="_on_Enemy_died"]
