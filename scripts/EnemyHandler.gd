@@ -7,6 +7,7 @@ signal enemiesDefeated
 
 
 func _on_Enemy_died():
+	print("enemy died")
 	enemiesLeft -= 1
 	if enemiesLeft == 0:
 		emit_signal("enemiesDefeated")
