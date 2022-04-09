@@ -83,6 +83,14 @@ PlayerPath = NodePath("../Player")
 [node name="Enemy" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 635, 503 )
 
+[node name="Enemy2" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 3226, 522 )
+PatrolPath = NodePath("../../Paths/PatrolPath")
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( 1345, 530 )
+PatrolPath = NodePath("../../Paths/PatrolPath2")
+
 [node name="Paths" type="Node" parent="."]
 
 [node name="PatrolPath" type="Path2D" parent="Paths"]
@@ -104,3 +112,5 @@ script = ExtResource( 6 )
 
 [connection signal="enemiesDefeated" from="Enemies" to="Exit" method="_on_Enemies_enemiesDefeated"]
 [connection signal="died" from="Enemies/Enemy" to="Enemies" method="_on_Enemy_died"]
+[connection signal="died" from="Enemies/Enemy2" to="Enemies" method="_on_Enemy_died"]
+[connection signal="died" from="Enemies/Enemy3" to="Enemies" method="_on_Enemy_died"]
