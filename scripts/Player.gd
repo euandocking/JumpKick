@@ -108,6 +108,12 @@ func _physics_process(_delta):
 		if is_on_floor():
 			die()
 	
+	#change kick area to direction player is facing
+	if faceDir == 1:
+		KickArea.set_position(Vector2(32, 32))
+	elif faceDir == -1:
+		KickArea.set_position(Vector2(-32, 32))
+	
 	#one way collision check
 	set_collision_mask_bit(3, true)
 	if drop:
