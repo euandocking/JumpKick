@@ -10,7 +10,6 @@ var kickForce = 1200
 
 var newVel = Vector2.ZERO
 
-var faceDir = 1
 var jumpPressed = false
 var jumpHeld = false
 var drop = false
@@ -20,8 +19,8 @@ var missKicked = false
 
 var touchingLeftWall = false
 var touchingRightWall = false
-var kickables = []
 
+var kickables = []
 var enemiesTouching = []
 
 onready var PlayerSprite = get_node("PlayerSprite")
@@ -29,11 +28,6 @@ onready var KickArea = get_node("KickArea")
 
 var playerTexture = preload("res://sprites/player.png")
 var playerKickReadyTexture = preload("res://sprites/player_kick_ready.png")
-
-func _ready():
-	accel = 200
-	maxAccelSpeed = 600
-	decel = 50
 
 func player_inputs():
 	if Input.is_action_just_pressed("left"):
@@ -79,13 +73,37 @@ func die():
 	print("lose")
 	get_tree().reload_current_scene()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func accelerate():
+	var newVel = velocity
+	
+	#acceleration
+	if accelDir == 1:
+		if newVel.x < maxAccelSpeed:
+			newVel.x += accel
+			if newVel.x > maxAccelSpeed:
+				newVel.x = maxAccelSpeed
+	elif accelDir == -1:
+		if newVel.x > -maxAccelSpeed:
+			newVel.x -= accel
+			if newVel.x < -maxAccelSpeed:
+				newVel.x = -maxAccelSpeed
+	
+	if !kicked:
+		velocity = newVel
+	else:
+		velocity = velocity.linear_interpolate(newVel, 0.3)
+
+func _ready():
+	accel = 200
+	maxAccelSpeed = 600
+	decel = 50
+
 func _process(_delta):
 	player_inputs()
 	animation()
 
 func _physics_process(_delta):
-	#die
+	#check if dead
 	if !enemiesTouching.empty():
 		if is_on_floor():
 			die()
@@ -101,13 +119,6 @@ func _physics_process(_delta):
 		kicked = false
 		missKicked = false
 	
-	#alt velocity check
-	var newVel = velocity
-	if !kicked:
-		velocity = newVel
-	else:
-		velocity = velocity.linear_interpolate(newVel, 0.3)
-	
 	#grav assignment for smoother jump
 	if velocity.y < 0:
 		if jumpHeld:
@@ -119,14 +130,14 @@ func _physics_process(_delta):
 	
 	#jump/kick
 	if jumpPressed:
-		#jump
+		#ground jump
 		if is_on_floor():
 			velocity.y = -jumpForce
-		#kick
+		#in air
 		else:
 			kicked = true
 			
-			#wall kick
+			#wall jump
 			if touchingLeftWall:
 				velocity = Vector2(1, -1).normalized()*kickForce
 			elif touchingRightWall:
@@ -143,7 +154,6 @@ func _physics_process(_delta):
 				#miss kick
 				else:
 					missKicked = true
-	
 	move()
 
 

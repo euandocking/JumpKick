@@ -3,9 +3,6 @@ extends "Actor.gd"
 #variables
 var enemiesTouching = []
 
-func set_velocity(vel):
-	velocity = vel
-	
 func kicked(vel):
 	velocity = vel
 
@@ -14,10 +11,11 @@ func _ready():
 	grav = 50
 
 func _physics_process(_delta):
-	if !enemiesTouching.empty():
-		if velocity != Vector2.ZERO:
+	if velocity != Vector2.ZERO:
+		if !enemiesTouching.empty():
 			for enemy in enemiesTouching:
 				enemy.kicked(velocity)
+	
 	move()
 
 #enemy collision check

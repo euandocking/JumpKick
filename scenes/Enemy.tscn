@@ -7,7 +7,7 @@
 extents = Vector2( 32, 32 )
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 300.0
+radius = 450.0
 
 [node name="EnemyBody" type="KinematicBody2D"]
 collision_layer = 16
@@ -21,6 +21,7 @@ texture = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="DetectionCollision" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource( 2 )

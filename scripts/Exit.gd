@@ -12,13 +12,10 @@ func _on_ExitArea_body_entered(body):
 	if enemiesDefeated:
 		win()
 
-
 func _on_ExitArea_body_exited(body):
 	playerInArea = false
 
-
 func _on_Enemies_enemiesDefeated():
-	print("enemies defeated")
 	enemiesDefeated = true
 	if playerInArea:
 		win()

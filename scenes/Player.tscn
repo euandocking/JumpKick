@@ -7,7 +7,7 @@
 extents = Vector2( 32, 32 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 64, 64 )
+extents = Vector2( 32, 32 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 28, 28 )
@@ -30,6 +30,7 @@ collision_layer = 0
 collision_mask = 20
 
 [node name="KickCollision" type="CollisionShape2D" parent="KickArea"]
+position = Vector2( 32, 32 )
 shape = SubResource( 2 )
 
 [node name="HurtArea" type="Area2D" parent="."]
@@ -55,6 +56,7 @@ collision_mask = 2
 [node name="RightCheckCollision" type="CollisionShape2D" parent="RightCheckArea"]
 shape = SubResource( 4 )
 
+[connection signal="accelDirChanged" from="." to="." method="_on_PlayerBody_accelDirChanged"]
 [connection signal="body_entered" from="KickArea" to="." method="_on_KickArea_body_entered"]
 [connection signal="body_exited" from="KickArea" to="." method="_on_KickArea_body_exited"]
 [connection signal="body_entered" from="HurtArea" to="." method="_on_HurtArea_body_entered"]
