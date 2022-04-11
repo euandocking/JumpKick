@@ -36,6 +36,17 @@ onready var KickArea = get_node("KickArea")
 var playerTexture = preload("res://sprites/player.png")
 var playerKickReadyTexture = preload("res://sprites/player_kick_ready.png")
 
+var state = ALIVE
+var dead = false
+
+enum {
+	ALIVE,
+	DEAD
+}
+
+func is_dead():
+	return dead
+
 func player_inputs():
 	if Input.is_action_just_pressed("left"):
 		accelDir = -1
@@ -67,38 +78,38 @@ func player_inputs():
 		drop = true
 
 func animation():
-	if kickables.empty():
-		PlayerSprite.set_texture(playerTexture)
+	if !dead:
+		if kickables.empty():
+			PlayerSprite.set_texture(playerTexture)
+		else:
+			PlayerSprite.set_texture(playerKickReadyTexture)
+		if faceDir == 1:
+			PlayerSprite.set_flip_h(false)
+		elif faceDir == -1:
+			PlayerSprite.set_flip_h(true)
 	else:
-		PlayerSprite.set_texture(playerKickReadyTexture)
-	if faceDir == 1:
-		PlayerSprite.set_flip_h(false)
-	elif faceDir == -1:
-		PlayerSprite.set_flip_h(true)
-
-func die():
-	print("lose")
-	get_tree().reload_current_scene()
+		PlayerSprite.set_texture(playerTexture)
 
 func accelerate():
-	var newVel = velocity
-	
-	#acceleration
-	if accelDir == 1:
-		if newVel.x < maxAccelSpeed:
-			newVel.x += accel
-			if newVel.x > maxAccelSpeed:
-				newVel.x = maxAccelSpeed
-	elif accelDir == -1:
-		if newVel.x > -maxAccelSpeed:
-			newVel.x -= accel
-			if newVel.x < -maxAccelSpeed:
-				newVel.x = -maxAccelSpeed
-	
-	if !kicked:
-		velocity = newVel
-	else:
-		velocity = velocity.linear_interpolate(newVel, 0.5)
+	if !dead:
+		var newVel = velocity
+		
+		#acceleration
+		if accelDir == 1:
+			if newVel.x < maxAccelSpeed:
+				newVel.x += accel
+				if newVel.x > maxAccelSpeed:
+					newVel.x = maxAccelSpeed
+		elif accelDir == -1:
+			if newVel.x > -maxAccelSpeed:
+				newVel.x -= accel
+				if newVel.x < -maxAccelSpeed:
+					newVel.x = -maxAccelSpeed
+		
+		if !kicked:
+			velocity = newVel
+		else:
+			velocity = velocity.linear_interpolate(newVel, 0.5)
 
 func jumpKick():
 	jumpTimer.stop()
@@ -119,20 +130,13 @@ func jumpKick():
 		else:
 			jumpTimer.start(jumpTimer.get_time_left())
 
-func _ready():
-	accel = 200
-	maxAccelSpeed = 600
-	decel = 50
-
-func _process(_delta):
-	player_inputs()
-	animation()
-
-func _physics_process(_delta):
+func alive():
 	#check if dead
 	if !enemiesTouching.empty():
 		if is_on_floor():
-			die()
+			print("lose")
+			dead = true
+			state = DEAD
 	
 	#change kick area to direction player is facing
 	if faceDir == 1:
@@ -180,6 +184,23 @@ func _physics_process(_delta):
 	if jumpAvailable:
 		if !is_on_floor():
 			coyoteTimer.start(coyoteDelay)
+
+func _ready():
+	accel = 200
+	maxAccelSpeed = 600
+	decel = 50
+
+func _process(_delta):
+	player_inputs()
+	animation()
+
+func _physics_process(_delta):
+	match state:
+		ALIVE:
+			alive()
+		DEAD:
+			if jumpPressed:
+				get_tree().reload_current_scene()
 	
 	move()
 
