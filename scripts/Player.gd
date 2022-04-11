@@ -156,14 +156,17 @@ func _physics_process(_delta):
 		kicked = false
 		missKicked = false
 	
-	#grav assignment for smoother jump
+	#grav assignment for smoother jump and wall slide
 	if velocity.y < 0:
 		if jumpHeld:
 			grav = jumpGrav
 		else:
 			grav = upGrav
 	else:
-		grav = downGrav
+		if is_on_wall():
+			grav = 20
+		else:
+			grav = downGrav
 	
 	#jump/kick
 	if jumpPressed:
