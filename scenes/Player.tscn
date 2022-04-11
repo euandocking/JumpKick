@@ -57,6 +57,9 @@ collision_mask = 2
 [node name="RightCheckCollision" type="CollisionShape2D" parent="RightCheckArea"]
 shape = SubResource( 4 )
 
+[node name="JumpTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="accelDirChanged" from="." to="." method="_on_PlayerBody_accelDirChanged"]
 [connection signal="body_entered" from="KickArea" to="." method="_on_KickArea_body_entered"]
 [connection signal="body_exited" from="KickArea" to="." method="_on_KickArea_body_exited"]

@@ -7,6 +7,8 @@ var downGrav = 70
 
 var jumpForce = 1000
 var kickForce = 1200
+var jumpDelay = 0.15
+onready var jumpTimer = get_node("JumpTimer")
 
 var newVel = Vector2.ZERO
 
@@ -15,6 +17,7 @@ var jumpHeld = false
 var drop = false
 
 var kicked = false
+var jumped = true
 var missKicked = false
 
 var touchingLeftWall = false
@@ -91,7 +94,33 @@ func accelerate():
 	if !kicked:
 		velocity = newVel
 	else:
-		velocity = velocity.linear_interpolate(newVel, 0.3)
+		velocity = velocity.linear_interpolate(newVel, 0.5)
+
+func jumpKick():
+	#jump/kick
+	if jumpPressed:
+		jumpTimer.start(jumpDelay)
+	
+	if !jumpTimer.is_stopped():
+		jumpTimer.stop()
+		if is_on_floor():
+			velocity.y = -jumpForce
+		else:
+			kicked = true
+			if !kickables.empty():
+				#kick
+				if !missKicked:
+					if !kickables.empty():
+						velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
+						for kickable in kickables:
+							kickable.kicked(-velocity)
+			elif touchingLeftWall:
+				velocity = Vector2(1, -1).normalized()*kickForce
+			elif touchingRightWall:
+				velocity = Vector2(-1, -1).normalized()*kickForce
+			else:
+				missKicked = true
+				jumpTimer.start(jumpTimer.get_time_left())
 
 func _ready():
 	accel = 200
@@ -134,32 +163,8 @@ func _physics_process(_delta):
 	else:
 		grav = downGrav
 	
-	#jump/kick
-	if jumpPressed:
-		#ground jump
-		if is_on_floor():
-			velocity.y = -jumpForce
-		#in air
-		else:
-			kicked = true
-			
-			#wall jump
-			if touchingLeftWall:
-				velocity = Vector2(1, -1).normalized()*kickForce
-			elif touchingRightWall:
-				velocity = Vector2(-1, -1).normalized()*kickForce
-			
-			#kick
-			elif !missKicked:
-				#kick
-				if !kickables.empty():
-					velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
-					for kickable in kickables:
-						kickable.kicked(-velocity)
-				
-				#miss kick
-				else:
-					missKicked = true
+	jumpKick()
+	
 	move()
 
 
