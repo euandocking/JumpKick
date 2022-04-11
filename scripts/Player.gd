@@ -7,8 +7,12 @@ var downGrav = 70
 
 var jumpForce = 1000
 var kickForce = 1200
-var jumpDelay = 0.15
+var jumpDelay = 0.05
 onready var jumpTimer = get_node("JumpTimer")
+
+var jumpAvailable = false
+var coyoteDelay = 0.05
+onready var coyoteTimer = get_node("CoyoteTimer")
 
 var newVel = Vector2.ZERO
 
@@ -97,30 +101,23 @@ func accelerate():
 		velocity = velocity.linear_interpolate(newVel, 0.5)
 
 func jumpKick():
-	#jump/kick
-	if jumpPressed:
-		jumpTimer.start(jumpDelay)
-	
-	if !jumpTimer.is_stopped():
-		jumpTimer.stop()
-		if is_on_floor():
-			velocity.y = -jumpForce
+	jumpTimer.stop()
+	if jumpAvailable:
+		jumpAvailable = false
+		velocity.y = -jumpForce
+	else:
+		kicked = true
+		jumpAvailable = false
+		if !kickables.empty():
+			velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
+			for kickable in kickables:
+				kickable.kicked(-velocity)
+		elif touchingLeftWall:
+			velocity = Vector2(1, -1).normalized()*kickForce
+		elif touchingRightWall:
+			velocity = Vector2(-1, -1).normalized()*kickForce
 		else:
-			kicked = true
-			if !kickables.empty():
-				#kick
-				if !missKicked:
-					if !kickables.empty():
-						velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
-						for kickable in kickables:
-							kickable.kicked(-velocity)
-			elif touchingLeftWall:
-				velocity = Vector2(1, -1).normalized()*kickForce
-			elif touchingRightWall:
-				velocity = Vector2(-1, -1).normalized()*kickForce
-			else:
-				missKicked = true
-				jumpTimer.start(jumpTimer.get_time_left())
+			jumpTimer.start(jumpTimer.get_time_left())
 
 func _ready():
 	accel = 200
@@ -139,20 +136,25 @@ func _physics_process(_delta):
 	
 	#change kick area to direction player is facing
 	if faceDir == 1:
-		KickArea.set_position(Vector2(32, 32))
+		KickArea.set_position(Vector2(8, 32))
 	elif faceDir == -1:
-		KickArea.set_position(Vector2(-32, 32))
+		KickArea.set_position(Vector2(-8, 32))
 	
 	#one way collision check
 	set_collision_mask_bit(3, true)
 	if drop:
 		set_collision_mask_bit(3, false)
 		drop = false
+		jumpAvailable = false
 	
 	#kick/miss reset
 	if is_on_floor() or is_on_wall():
 		kicked = false
 		missKicked = false
+	
+	#coyote time reset
+	if is_on_floor():
+		jumpAvailable = true
 	
 	#grav assignment for smoother jump
 	if velocity.y < 0:
@@ -163,7 +165,18 @@ func _physics_process(_delta):
 	else:
 		grav = downGrav
 	
-	jumpKick()
+	#jump/kick
+	if jumpPressed:
+		if jumpTimer.is_stopped():
+			if !missKicked:
+				jumpTimer.start(jumpDelay)
+	
+	if !jumpTimer.is_stopped():
+		jumpKick()
+	
+	if jumpAvailable:
+		if !is_on_floor():
+			coyoteTimer.start(coyoteDelay)
 	
 	move()
 
@@ -189,3 +202,12 @@ func _on_LeftCheckArea_body_entered(body):
 	touchingLeftWall = true
 func _on_LeftCheckArea_body_exited(body):
 	touchingLeftWall = false
+
+#jump delay timeout
+func _on_JumpTimer_timeout():
+	missKicked = true
+
+#coyote timeout
+func _on_CoyoteTimer_timeout():
+	jumpAvailable = false
+	print("no jumping")
