@@ -3,7 +3,7 @@ extends "Actor.gd"
 #variables
 var jumpGrav = 40
 var upGrav = 60
-var downGrav = 70
+var downGrav = 90
 
 var jumpForce = 1000
 var kickForce = 1200
@@ -140,6 +140,10 @@ func _physics_process(_delta):
 	elif faceDir == -1:
 		KickArea.set_position(Vector2(-8, 32))
 	
+	#coyote time reset
+	if is_on_floor():
+		jumpAvailable = true
+	
 	#one way collision check
 	set_collision_mask_bit(3, true)
 	if drop:
@@ -151,10 +155,6 @@ func _physics_process(_delta):
 	if is_on_floor() or is_on_wall():
 		kicked = false
 		missKicked = false
-	
-	#coyote time reset
-	if is_on_floor():
-		jumpAvailable = true
 	
 	#grav assignment for smoother jump
 	if velocity.y < 0:

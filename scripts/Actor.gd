@@ -5,7 +5,8 @@ var accelDir = 0
 var accel = 0
 var maxAccelSpeed = 0
 var decel = 25
-var grav = 50
+var grav = 90
+var maxFallSpeed = 2500
 var velocity = Vector2.ZERO
 
 signal accelDirChanged
@@ -37,6 +38,8 @@ func move():
 	
 	#gravity
 	velocity.y += grav
+	if velocity.y > maxFallSpeed:
+		velocity.y = maxFallSpeed
 	
 	#apply velocity
 	velocity = move_and_slide(velocity, Vector2.UP)
