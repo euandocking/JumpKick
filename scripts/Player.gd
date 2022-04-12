@@ -32,6 +32,7 @@ var enemiesTouching = []
 
 onready var PlayerSprite = get_node("PlayerSprite")
 onready var KickArea = get_node("KickArea")
+onready var KickAudio = get_node("KickAudio")
 
 var playerTexture = preload("res://sprites/player.png")
 var playerKickReadyTexture = preload("res://sprites/player_kick_ready.png")
@@ -120,6 +121,7 @@ func jumpKick():
 		kicked = true
 		jumpAvailable = false
 		if !kickables.empty():
+			KickAudio.play()
 			velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
 			for kickable in kickables:
 				kickable.kicked(-velocity)
