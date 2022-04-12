@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/[ONTIVA.COM] Old School Hip Hop Beat Instrumental - No Copyright Music-HQ.wav-510c0f4fdb518450aa9e9e478555d806.sample"
+
+[deps]
+
+source_file="res://audio/[ONTIVA.COM] Old School Hip Hop Beat Instrumental - No Copyright Music-HQ.wav"
+dest_files=[ "res://.import/[ONTIVA.COM] Old School Hip Hop Beat Instrumental - No Copyright Music-HQ.wav-510c0f4fdb518450aa9e9e478555d806.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0
