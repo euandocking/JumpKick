@@ -11,7 +11,7 @@ var jumpDelay = 0.05
 onready var jumpTimer = get_node("JumpTimer")
 
 var jumpAvailable = false
-var coyoteDelay = 0.05
+var coyoteDelay = 0.0165
 onready var coyoteTimer = get_node("CoyoteTimer")
 
 var newVel = Vector2.ZERO
@@ -234,4 +234,3 @@ func _on_JumpTimer_timeout():
 #coyote timeout
 func _on_CoyoteTimer_timeout():
 	jumpAvailable = false
-	print("no jumping")
