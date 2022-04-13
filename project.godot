@@ -21,7 +21,7 @@ _global_script_class_icons={
 [application]
 
 config/name="JumpKick"
-run/main_scene="res://scenes/MainMenu.tscn"
+run/main_scene="res://scenes/menus/MainMenu.tscn"
 config/icon="res://sprites/icon.png"
 
 [display]

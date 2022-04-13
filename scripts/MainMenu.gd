@@ -4,7 +4,7 @@ func _ready():
 	$MenuOptions/SelectLevelButton.grab_focus()
 
 func _on_SelectLevelButton_pressed():
-	get_tree().change_scene("res://scenes/Level.tscn")
+	get_tree().change_scene("res://scenes/levels/Level.tscn")
 
 
 func _on_SettingsButton_pressed():
