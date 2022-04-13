@@ -7,7 +7,7 @@ var downGrav = 90
 
 var jumpForce = 1000
 var kickForce = 1200
-var jumpDelay = 0.05
+var jumpDelay = 0.025
 onready var jumpTimer = get_node("JumpTimer")
 
 var jumpAvailable = false
@@ -33,6 +33,9 @@ var enemiesTouching = []
 onready var PlayerSprite = get_node("PlayerSprite")
 onready var KickArea = get_node("KickArea")
 onready var KickAudio = get_node("KickAudio")
+onready var hitLabels = get_node("HitLabels")
+
+var hitLabel = load("res://scenes/HitLabel.tscn")
 
 var playerTexture = preload("res://sprites/player.png")
 var playerKickReadyTexture = preload("res://sprites/player_kick_ready.png")
@@ -80,7 +83,7 @@ func player_inputs():
 
 func animation():
 	if !dead:
-		if kickables.empty():
+		if missKicked:
 			PlayerSprite.set_texture(playerTexture)
 		else:
 			PlayerSprite.set_texture(playerKickReadyTexture)
@@ -122,15 +125,23 @@ func jumpKick():
 		jumpAvailable = false
 		if !kickables.empty():
 			KickAudio.play()
-			velocity = (global_position - kickables[0].get_global_position()).normalized() * kickForce
+			var averageKickablePos = Vector2.ZERO
 			for kickable in kickables:
-				kickable.kicked(-velocity)
+				var tempHitLabel = hitLabel.instance()
+				var kickVel = (kickable.get_global_position() - global_position).normalized() * kickForce
+				tempHitLabel.set_rotation(-kickVel.angle_to(Vector2(0,1)))
+				tempHitLabel.set_global_position(kickable.get_global_position().linear_interpolate(global_position, 0.8))
+				hitLabels.add_child(tempHitLabel)
+				averageKickablePos += kickable.get_global_position()
+				kickable.kicked(kickVel)
+			averageKickablePos /= kickables.size()
+			velocity = (global_position - averageKickablePos).normalized() * kickForce
 		elif touchingLeftWall:
 			velocity = Vector2(1, -1).normalized()*kickForce
 		elif touchingRightWall:
 			velocity = Vector2(-1, -1).normalized()*kickForce
 		else:
-			jumpTimer.start(jumpTimer.get_time_left())
+			missKicked = true
 
 func alive():
 	#check if dead
@@ -210,8 +221,10 @@ func _physics_process(_delta):
 #kickable signals
 func _on_KickArea_body_entered(body):
 	kickables.append(body)
+	body.setHighlight(true)
 func _on_KickArea_body_exited(body):
 	kickables.erase(body)
+	body.setHighlight(false)
 
 #enemy signals
 func _on_HurtArea_body_entered(body):
@@ -230,8 +243,8 @@ func _on_LeftCheckArea_body_exited(body):
 	touchingLeftWall = false
 
 #jump delay timeout
-func _on_JumpTimer_timeout():
-	missKicked = true
+#func _on_JumpTimer_timeout():
+#	missKicked = true
 
 #coyote timeout
 func _on_CoyoteTimer_timeout():

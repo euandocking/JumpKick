@@ -1,6 +1,8 @@
 extends Camera2D
 
-onready var PlayerBody = get_node("/root/Level/Player")
+export(NodePath) var PlayerPath
+onready var Player = get_node(PlayerPath)
 
 func _process(_delta):
-	position.x = PlayerBody.get_global_position().x
+	if Player:
+		position.x = Player.get_global_position().x

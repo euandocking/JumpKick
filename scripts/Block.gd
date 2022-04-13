@@ -3,6 +3,11 @@ extends "Actor.gd"
 #variables
 var enemiesTouching = []
 
+onready var KickableHighlight = get_node("KickableHighlight")
+
+func setHighlight(value):
+	KickableHighlight.set_visible(value)
+
 func kicked(vel):
 	velocity = vel
 

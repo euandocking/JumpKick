@@ -12,7 +12,7 @@ func _ready():
 	for enemy in enemies:
 		enemy.setPlayer(Player)
 
-func _on_Enemy_died():
+func _on_EnemyBody_died():
 	enemiesRemaining -= 1
 	if enemiesRemaining == 0:
 		emit_signal("enemiesDefeated")
