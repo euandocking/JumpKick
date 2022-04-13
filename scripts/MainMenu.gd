@@ -1,7 +1,7 @@
 extends VBoxContainer
 
 func _ready():
-	$MenuOptions/SelectLevelButton.grab_focus()
+	$MenuOptions.get_children()[0].grab_focus()
 
 func _on_SelectLevelButton_pressed():
 	get_tree().change_scene("res://scenes/levels/Level.tscn")

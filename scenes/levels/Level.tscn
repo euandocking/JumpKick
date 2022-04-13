@@ -120,6 +120,7 @@ position = Vector2( 3616, 480 )
 position = Vector2( 145, 420 )
 
 [node name="MainCamera" parent="." instance=ExtResource( 6 )]
+PlayerPath = NodePath("../Player")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
@@ -127,9 +128,3 @@ volume_db = -25.708
 autoplay = true
 
 [connection signal="enemiesDefeated" from="Enemies" to="Exit" method="_on_Enemies_enemiesDefeated"]
-[connection signal="died" from="Enemies/Enemy" to="Enemies" method="_on_Enemy_died"]
-[connection signal="died" from="Enemies/Enemy2" to="Enemies" method="_on_Enemy_died"]
-[connection signal="died" from="Enemies/Enemy3" to="Enemies" method="_on_Enemy_died"]
-[connection signal="died" from="Enemies/Enemy4" to="Enemies" method="_on_Enemy_died"]
-[connection signal="died" from="Enemies/Enemy5" to="Enemies" method="_on_Enemy_died"]
-[connection signal="died" from="Enemies/Enemy6" to="Enemies" method="_on_Enemy_died"]

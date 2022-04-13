@@ -42,7 +42,7 @@ func kicked(vel):
 	set_collision_layer_bit(4, false)
 	set_collision_mask_bit(4, false)
 	state = DEAD
-	emit_signal("died")
+	get_parent()._on_EnemyBody_died()
 
 func patrol():
 	#movement
