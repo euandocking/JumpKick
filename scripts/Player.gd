@@ -151,12 +151,6 @@ func alive():
 			dead = true
 			state = DEAD
 	
-	#change kick area to direction player is facing
-	if faceDir == 1:
-		KickArea.set_position(Vector2(8, 32))
-	elif faceDir == -1:
-		KickArea.set_position(Vector2(-8, 32))
-	
 	#coyote time reset
 	if is_on_floor():
 		jumpAvailable = true

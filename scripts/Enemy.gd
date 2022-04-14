@@ -37,12 +37,14 @@ func setPlayer(player):
 	PlayerBody = player
 
 func kicked(vel):
-	accelDir = 0
+	if state != DEAD:
+		set_collision_layer_bit(4, false)
+		set_collision_mask_bit(4, false)
+		set_collision_layer_bit(2, true)
+		accelDir = 0
+		state = DEAD
+		get_parent()._on_EnemyBody_died()
 	velocity = vel
-	set_collision_layer_bit(4, false)
-	set_collision_mask_bit(4, false)
-	state = DEAD
-	get_parent()._on_EnemyBody_died()
 
 func patrol():
 	#movement
