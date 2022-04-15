@@ -71,8 +71,8 @@ volume_db = -5.0
 [node name="HitLabels" type="Node" parent="."]
 
 [connection signal="accelDirChanged" from="." to="." method="_on_PlayerBody_accelDirChanged"]
-[connection signal="body_entered" from="KickArea" to="." method="_on_KickArea_body_entered"]
-[connection signal="body_exited" from="KickArea" to="." method="_on_KickArea_body_exited"]
+[connection signal="area_entered" from="KickArea" to="." method="_on_KickArea_area_entered"]
+[connection signal="area_exited" from="KickArea" to="." method="_on_KickArea_area_exited"]
 [connection signal="body_entered" from="HurtArea" to="." method="_on_HurtArea_body_entered"]
 [connection signal="body_exited" from="HurtArea" to="." method="_on_HurtArea_body_exited"]
 [connection signal="body_entered" from="LeftCheckArea" to="." method="_on_LeftCheckArea_body_entered"]

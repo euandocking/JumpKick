@@ -17,7 +17,6 @@ export (NodePath) var PatrolPath
 var PatrolPoints
 var patrolIndex = 0
 onready var EnemySprite = get_node("EnemySprite")
-onready var KickableHighlight = get_node("KickableHighlight")
 
 var EnemyTexture = preload("res://sprites/enemy.png")
 var EnemyDeadTexture = preload("res://sprites/enemy_dead.png")
@@ -30,9 +29,6 @@ enum {
 
 var state = PATROL
 
-func setHighlight(value):
-	KickableHighlight.set_visible(value)
-
 func setPlayer(player):
 	PlayerBody = player
 
@@ -40,7 +36,6 @@ func kicked(vel):
 	if state != DEAD:
 		set_collision_layer_bit(4, false)
 		set_collision_mask_bit(4, false)
-		set_collision_layer_bit(2, true)
 		accelDir = 0
 		state = DEAD
 		get_parent()._on_EnemyBody_died()
