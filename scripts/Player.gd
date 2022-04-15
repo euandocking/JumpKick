@@ -28,6 +28,7 @@ var touchingLeftWall = false
 var touchingRightWall = false
 
 var kickables = []
+var toKick = []
 var enemiesTouching = []
 
 onready var PlayerSprite = get_node("PlayerSprite")
@@ -123,10 +124,9 @@ func jumpKick():
 	else:
 		kicked = true
 		jumpAvailable = false
-		if !kickables.empty():
-			KickAudio.play()
+		if !toKick.empty():
 			var averageKickablePos = Vector2.ZERO
-			for kickable in kickables:
+			for kickable in toKick:
 				var tempHitLabel = hitLabel.instance()
 				var kickVel = (kickable.get_global_position() - global_position).normalized() * kickForce
 				tempHitLabel.set_rotation(-kickVel.angle_to(Vector2(0,1)))
@@ -134,8 +134,9 @@ func jumpKick():
 				hitLabels.add_child(tempHitLabel)
 				averageKickablePos += kickable.get_global_position()
 				kickable.kicked(kickVel)
-			averageKickablePos /= kickables.size()
+			averageKickablePos /= toKick.size()
 			velocity = (global_position - averageKickablePos).normalized() * kickForce
+			KickAudio.play()
 		elif touchingLeftWall:
 			velocity = Vector2(1, -1).normalized()*kickForce
 		elif touchingRightWall:
@@ -143,19 +144,27 @@ func jumpKick():
 		else:
 			missKicked = true
 
+func checkToKick():
+	toKick = []
+	if !kickables.empty():
+		#check if any kickable objects are blocked by an object
+		for kickable in kickables:
+			kickable.setHighlight(false)
+			var space_state = get_world_2d().direct_space_state
+			var result = space_state.intersect_ray(global_position, kickable.get_global_position(), [self, kickable.get_parent()])
+			if !result.has("collider"): 
+				toKick.append(kickable)
+				kickable.setHighlight(true)
+
 func alive():
+	checkToKick()
+	
 	#check if dead
 	if !enemiesTouching.empty():
 		if is_on_floor():
 			print("lose")
 			dead = true
 			state = DEAD
-	
-	#change kick area to direction player is facing
-	if faceDir == 1:
-		KickArea.set_position(Vector2(8, 32))
-	elif faceDir == -1:
-		KickArea.set_position(Vector2(-8, 32))
 	
 	#coyote time reset
 	if is_on_floor():
@@ -219,12 +228,11 @@ func _physics_process(_delta):
 
 
 #kickable signals
-func _on_KickArea_body_entered(body):
-	kickables.append(body)
-	body.setHighlight(true)
-func _on_KickArea_body_exited(body):
-	kickables.erase(body)
-	body.setHighlight(false)
+func _on_KickArea_area_entered(area):
+	kickables.append(area)
+func _on_KickArea_area_exited(area):
+	area.setHighlight(false)
+	kickables.erase(area)
 
 #enemy signals
 func _on_HurtArea_body_entered(body):
@@ -241,10 +249,6 @@ func _on_LeftCheckArea_body_entered(body):
 	touchingLeftWall = true
 func _on_LeftCheckArea_body_exited(body):
 	touchingLeftWall = false
-
-#jump delay timeout
-#func _on_JumpTimer_timeout():
-#	missKicked = true
 
 #coyote timeout
 func _on_CoyoteTimer_timeout():
