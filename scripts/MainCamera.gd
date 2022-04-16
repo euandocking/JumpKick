@@ -5,4 +5,4 @@ onready var Player = get_node(PlayerPath)
 
 func _process(_delta):
 	if Player:
-		position.x = Player.get_global_position().x
+		position = position.linear_interpolate(Player.get_position()+Player.velocity*0.1, 0.1)

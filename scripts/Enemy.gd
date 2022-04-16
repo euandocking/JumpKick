@@ -59,8 +59,8 @@ func patrol():
 			if playerInArea:
 				if sign(PlayerBody.get_global_position().x - global_position.x) == faceDir:
 					var space_state = get_world_2d().direct_space_state
-					var result = space_state.intersect_ray(global_position, PlayerBody.get_global_position(), [self], 11)
-					if result.collider == PlayerBody:
+					var result = space_state.intersect_ray(global_position, PlayerBody.get_global_position(), [self], 10)
+					if result.empty():
 						emit_signal("detectedPlayer")
 
 func attack():
@@ -68,8 +68,8 @@ func attack():
 		state = PATROL
 	
 	var space_state = get_world_2d().direct_space_state
-	var result = space_state.intersect_ray(global_position, PlayerBody.get_global_position(), [self], 11)
-	if playerInArea and (result.collider == PlayerBody):
+	var result = space_state.intersect_ray(global_position, PlayerBody.get_global_position(), [self, PlayerBody], 11)
+	if playerInArea and result.empty():
 		var toPlayer = PlayerBody.get_position().x - position.x
 		if abs(toPlayer) > 32:
 			var newDir = sign(toPlayer)
