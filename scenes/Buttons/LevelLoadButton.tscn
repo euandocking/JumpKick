@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/buttons/MenuButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/LevelLoadButton.gd" type="Script" id=2]
+
+[node name="LevelLoadButton" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+buttonText = "Load"
+
+[connection signal="pressed" from="." to="." method="_on_MenuButton_pressed"]
