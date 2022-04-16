@@ -79,8 +79,10 @@ func player_inputs():
 	else:
 		jumpHeld = false
 	
-	if Input.is_action_just_pressed("drop"):
+	if Input.is_action_pressed("drop"):
 		drop = true
+	else:
+		drop = false
 
 func animation():
 	if !dead:
@@ -152,7 +154,7 @@ func checkToKick():
 			kickable.setHighlight(false)
 			var space_state = get_world_2d().direct_space_state
 			var result = space_state.intersect_ray(global_position, kickable.get_global_position(), [self, kickable.get_parent()])
-			if !result.has("collider"): 
+			if result != {}: 
 				toKick.append(kickable)
 				kickable.setHighlight(true)
 
@@ -174,8 +176,6 @@ func alive():
 	set_collision_mask_bit(3, true)
 	if drop:
 		set_collision_mask_bit(3, false)
-		drop = false
-		jumpAvailable = false
 	
 	#kick/miss reset
 	if is_on_floor() or is_on_wall():
@@ -211,6 +211,11 @@ func _ready():
 	accel = 200
 	maxAccelSpeed = 600
 	decel = 50
+	
+	if Input.is_action_pressed("right"):
+		accelDir = 1
+	elif Input.is_action_pressed("left"):
+		accelDir = -1
 
 func _process(_delta):
 	player_inputs()

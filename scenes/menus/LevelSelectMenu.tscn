@@ -50,7 +50,7 @@ levelPath = "res://scenes/levels/Level.tscn"
 margin_top = 160.0
 margin_bottom = 220.0
 buttonText = "Apartment"
-levelPath = "res://scenes/levels/Level.tscn"
+levelPath = "res://scenes/levels/ApartmentLevel.tscn"
 
 [node name="LevelLoadButton4" parent="LevelMenu/MenuOptions" instance=ExtResource( 2 )]
 margin_top = 240.0

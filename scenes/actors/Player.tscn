@@ -17,6 +17,7 @@ extents = Vector2( 28, 28 )
 extents = Vector2( 4, 32 )
 
 [node name="PlayerBody" type="KinematicBody2D"]
+z_index = 2
 collision_mask = 11
 script = ExtResource( 2 )
 
@@ -29,7 +30,7 @@ shape = SubResource( 1 )
 [node name="KickArea" type="Area2D" parent="."]
 position = Vector2( 0, 32 )
 collision_layer = 0
-collision_mask = 20
+collision_mask = 4
 
 [node name="KickCollision" type="CollisionShape2D" parent="KickArea"]
 position = Vector2( 0, 16 )
