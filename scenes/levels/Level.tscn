@@ -40,6 +40,7 @@ _data = {
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 12 )
+levelName = "warehouse"
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -143,6 +144,18 @@ margin_bottom = 57.0
 custom_fonts/font = ExtResource( 11 )
 text = "Time:"
 script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BestTime" type="Label" parent="GUI"]
+margin_left = 24.0
+margin_top = 56.0
+margin_right = 92.0
+margin_bottom = 97.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 11 )
+text = "Best Time: -"
 __meta__ = {
 "_edit_use_anchors_": false
 }
