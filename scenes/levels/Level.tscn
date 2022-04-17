@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/tilesets/TileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/actors/Player.tscn" type="PackedScene" id=2]
@@ -9,8 +9,7 @@
 [ext_resource path="res://scripts/EnemyHandler.gd" type="Script" id=7]
 [ext_resource path="res://scenes/environmental/Exit.tscn" type="PackedScene" id=8]
 [ext_resource path="res://audio/[ONTIVA.COM] Old School Hip Hop Beat Instrumental - No Copyright Music-HQ.wav" type="AudioStream" id=9]
-[ext_resource path="res://scripts/TimeKeeper.gd" type="Script" id=10]
-[ext_resource path="res://fonts/KOMIKAX_36.tres" type="DynamicFont" id=11]
+[ext_resource path="res://LevelGUI.tscn" type="PackedScene" id=10]
 [ext_resource path="res://scripts/Level.gd" type="Script" id=12]
 
 [sub_resource type="Curve2D" id=3]
@@ -73,7 +72,7 @@ position = Vector2( 2728, 392 )
 
 [node name="Enemies" type="Node" parent="."]
 script = ExtResource( 7 )
-PlayerPath = NodePath("../Player")
+PlayerPath = NodePath("../PlayerBody")
 
 [node name="Enemy" parent="Enemies" instance=ExtResource( 5 )]
 position = Vector2( 800, 440 )
@@ -121,43 +120,18 @@ curve = SubResource( 7 )
 [node name="Exit" parent="." instance=ExtResource( 8 )]
 position = Vector2( 3616, 480 )
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
+[node name="PlayerBody" parent="." instance=ExtResource( 2 )]
 position = Vector2( 145, 420 )
 
 [node name="MainCamera" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1112, 360 )
-PlayerPath = NodePath("../Player")
+PlayerPath = NodePath("../PlayerBody")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
 volume_db = -25.708
 autoplay = true
 
-[node name="GUI" type="CanvasLayer" parent="."]
-layer = 2
-
-[node name="PlayTime" type="Label" parent="GUI"]
-margin_left = 24.0
-margin_top = 16.0
-margin_right = 92.0
-margin_bottom = 57.0
-custom_fonts/font = ExtResource( 11 )
-text = "Time:"
-script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BestTime" type="Label" parent="GUI"]
-margin_left = 24.0
-margin_top = 56.0
-margin_right = 92.0
-margin_bottom = 97.0
-custom_colors/font_color = Color( 1, 0, 0, 1 )
-custom_fonts/font = ExtResource( 11 )
-text = "Best Time: -"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="GUI" parent="." instance=ExtResource( 10 )]
 
 [connection signal="enemiesDefeated" from="Enemies" to="Exit" method="_on_Enemies_enemiesDefeated"]
