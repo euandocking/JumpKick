@@ -4,8 +4,7 @@ var playerInArea = false
 var enemiesDefeated = false
 
 func win():
-	print("win")
-	get_tree().change_scene("res://scenes/menus/LevelSelectMenu.tscn")
+	get_parent().win()
 
 func _on_ExitArea_body_entered(body):
 	playerInArea = true
