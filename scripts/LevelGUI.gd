@@ -11,6 +11,9 @@ func _process(delta):
 		elif get_node("LevelSelectMenu").visible:
 			get_node("LevelSelectMenu").hide()
 			get_node("MainMenu").popup()
+		elif get_node("HelpPopup").visible:
+			get_node("HelpPopup").hide()
+			get_node("MainMenu").popup()
 		else:
 			get_tree().paused = true
 			get_node("MainMenu").popup()

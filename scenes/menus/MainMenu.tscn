@@ -24,16 +24,16 @@ __meta__ = {
 }
 
 [node name="Logo" type="TextureRect" parent="Menu"]
-margin_top = 88.0
+margin_top = 48.0
 margin_right = 674.0
-margin_bottom = 264.0
+margin_bottom = 224.0
 texture = ExtResource( 1 )
 stretch_mode = 4
 
 [node name="MenuOptions" type="VBoxContainer" parent="Menu"]
-margin_top = 268.0
+margin_top = 228.0
 margin_right = 674.0
-margin_bottom = 488.0
+margin_bottom = 528.0
 custom_constants/separation = 20
 
 [node name="SelectLevelButton" parent="Menu/MenuOptions" instance=ExtResource( 2 )]
@@ -44,24 +44,34 @@ margin_right = 674.0
 margin_bottom = 60.0
 buttonText = "Select Level"
 
-[node name="SettingsButton" parent="Menu/MenuOptions" instance=ExtResource( 2 )]
+[node name="HelpButton" parent="Menu/MenuOptions" instance=ExtResource( 2 )]
 anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
 margin_top = 80.0
 margin_right = 674.0
 margin_bottom = 140.0
-buttonText = "Settings"
+buttonText = "How to Play"
 
-[node name="QuitButton" parent="Menu/MenuOptions" instance=ExtResource( 2 )]
+[node name="SettingsButton" parent="Menu/MenuOptions" instance=ExtResource( 2 )]
 anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
 margin_top = 160.0
 margin_right = 674.0
 margin_bottom = 220.0
+buttonText = "Settings"
+
+[node name="QuitButton" parent="Menu/MenuOptions" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_right = 0.0
+margin_left = 0.0
+margin_top = 240.0
+margin_right = 674.0
+margin_bottom = 300.0
 buttonText = "Quit"
 
 [connection signal="pressed" from="Menu/MenuOptions/SelectLevelButton" to="." method="_on_SelectLevelButton_pressed"]
+[connection signal="pressed" from="Menu/MenuOptions/HelpButton" to="." method="_on_HelpButton_pressed"]
 [connection signal="pressed" from="Menu/MenuOptions/SettingsButton" to="." method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="Menu/MenuOptions/QuitButton" to="." method="_on_QuitButton_pressed"]
