@@ -1,10 +1,11 @@
-extends VBoxContainer
+extends Popup
 
 func _ready():
-	$MenuOptions.get_children()[0].grab_focus()
+	$Menu/MenuOptions.get_children()[0].grab_focus()
 
 func _on_SelectLevelButton_pressed():
-	get_tree().change_scene("res://scenes/menus/LevelSelectMenu.tscn")
+	get_parent().get_node("LevelSelectMenu").popup()
+	hide()
 
 
 func _on_SettingsButton_pressed():
