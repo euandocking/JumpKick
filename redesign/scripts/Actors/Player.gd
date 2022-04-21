@@ -89,6 +89,11 @@ func _process(_delta):
 			PlayerBody.kick((global_position - averageKickablePos).normalized() * kickSpeed)
 			KickAudio.play()
 	
+	if Input.is_action_pressed("drop"):
+		PlayerBody.set_collision_mask_bit(3, false)
+	else:
+		PlayerBody.set_collision_mask_bit(3, true)
+	
 	#animate sprite
 	if faceDir == 1:
 		PlayerSprite.set_flip_h(false)

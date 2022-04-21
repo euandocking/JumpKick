@@ -16,7 +16,7 @@ margin_bottom = 296.0
 [node name="ResumeButton" parent="ScrollContainer/MenuButtons" index="0" instance=ExtResource( 2 )]
 anchor_right = 0.0
 margin_right = 674.0
-text = "Resume"
+text = "Play"
 
 [node name="RestartButton" parent="ScrollContainer/MenuButtons" index="1" instance=ExtResource( 2 )]
 anchor_right = 0.0

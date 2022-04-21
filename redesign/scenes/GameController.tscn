@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://redesign/scripts/GameController.gd" type="Script" id=1]
-[ext_resource path="res://redesign/scenes/Level.tscn" type="PackedScene" id=2]
+[ext_resource path="res://redesign/scenes/levels/StreetsLevel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://redesign/scenes/MainMenuBox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/KOMIKAX_36.tres" type="DynamicFont" id=4]
 
@@ -16,12 +16,13 @@ script = ExtResource( 1 )
 pause_mode = 1
 follow_viewport_enable = true
 
-[node name="Level" parent="LevelCanvas" instance=ExtResource( 2 )]
+[node name="StreetsLevel" parent="LevelCanvas" instance=ExtResource( 2 )]
 
 [node name="MenuCanvas" type="CanvasLayer" parent="."]
 pause_mode = 2
 
 [node name="MainMenuPopup" type="Popup" parent="MenuCanvas"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
@@ -31,6 +32,10 @@ __meta__ = {
 }
 
 [node name="MainMenuBox" parent="MenuCanvas/MainMenuPopup" instance=ExtResource( 3 )]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -290.0
+margin_bottom = 290.0
 
 [node name="LevelCompletePopup" type="Popup" parent="MenuCanvas"]
 anchor_right = 1.0
@@ -56,7 +61,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="levelCompleted" from="LevelCanvas/Level" to="." method="_on_Level_levelCompleted"]
+[connection signal="levelCompleted" from="LevelCanvas/StreetsLevel" to="." method="_on_Level_levelCompleted"]
 [connection signal="quitPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_quitPressed"]
 [connection signal="restartPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_restartPressed"]
 [connection signal="resumePressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_resumePressed"]

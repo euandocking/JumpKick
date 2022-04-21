@@ -8,7 +8,7 @@ var currentLevel
 var numLevels
 
 onready var LevelCanvas = get_node("LevelCanvas")
-onready var Level = get_node("LevelCanvas/Level")
+onready var Level = get_node("LevelCanvas/StreetsLevel")
 onready var MainMenuPopup = get_node("MenuCanvas/MainMenuPopup")
 onready var LevelCompletePopup = get_node("MenuCanvas/LevelCompletePopup")
 onready var activePopup = get_node("MenuCanvas/MainMenuPopup")
@@ -18,8 +18,8 @@ func _ready():
 	levelComplete = false
 	
 	currentLevel = 0
-	numLevels = 1
-	levelFilenames = ["res://redesign/scenes/Level.tscn"]
+	levelFilenames = ["res://redesign/scenes/levels/StreetsLevel.tscn", "res://redesign/scenes/levels/WarehouseLevel.tscn"]
+	numLevels = levelFilenames.size()
 	
 	activePopup.popup()
 	get_tree().paused = true
@@ -28,7 +28,9 @@ func _process(_delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		if levelComplete:
 			if !menuOpen:
-				switchLevel(levelFilenames[wrapi(currentLevel+1, 1, numLevels)-1])
+				currentLevel = posmod(currentLevel + 1, numLevels)
+				switchLevel(levelFilenames[currentLevel])
+				
 	if Input.is_action_just_pressed("exit"):
 		if menuOpen:
 			resume()
@@ -53,6 +55,7 @@ func resume():
 		get_tree().paused = false
 
 func switchLevel(levelFilename):
+	print(levelFilename)
 	levelComplete = false
 	activePopup.hide()
 	get_tree().paused = false

@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://sprites/enemy.png" type="Texture" id=1]
+[ext_resource path="res://sprites/enemy_dead.png" type="Texture" id=2]
+[ext_resource path="res://redesign/scripts/Actors/EnemyBody.gd" type="Script" id=3]
+[ext_resource path="res://redesign/scripts/Actors/Enemy.gd" type="Script" id=4]
+[ext_resource path="res://redesign/scenes/Kickable.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 32 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
+
+[node name="Enemy" type="Node2D"]
+position = Vector2( 624, 656 )
+script = ExtResource( 4 )
+
+[node name="Kickable" parent="." instance=ExtResource( 5 )]
+
+[node name="EnemyBody" type="KinematicBody2D" parent="."]
+collision_layer = 16
+collision_mask = 10
+script = ExtResource( 3 )
+
+[node name="EnemyCollision" type="CollisionShape2D" parent="EnemyBody"]
+shape = SubResource( 1 )
+
+[node name="EnemySprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 2 )
+animation = "idle"
+
+[connection signal="kicked" from="Kickable" to="." method="_on_Kickable_kicked"]

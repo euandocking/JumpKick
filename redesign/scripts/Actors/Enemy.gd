@@ -24,4 +24,5 @@ func _on_Kickable_kicked():
 	if state != States.DEAD:
 		emit_signal("defeated")
 		state = States.DEAD
+		EnemySprite.animation = "dead"
 	EnemyBody.velocity = Kickable.kickVel
