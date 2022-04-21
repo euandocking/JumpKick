@@ -11,5 +11,5 @@ func _process(_delta):
 func getBody():
 	return CrateBody
 
-func _on_Kickable_kicked():
-	CrateBody.velocity = Kickable.kickVel
+func _on_Kickable_kicked(kickVel):
+	getBody().velocity = kickVel

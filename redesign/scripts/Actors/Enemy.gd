@@ -20,9 +20,9 @@ func _process(_delta):
 func getBody():
 	return EnemyBody
 
-func _on_Kickable_kicked():
+func _on_Kickable_kicked(kickVel):
 	if state != States.DEAD:
 		emit_signal("defeated")
 		state = States.DEAD
 		EnemySprite.animation = "dead"
-	EnemyBody.velocity = Kickable.kickVel
+	getBody().velocity = kickVel

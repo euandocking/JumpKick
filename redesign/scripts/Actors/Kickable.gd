@@ -1,14 +1,12 @@
 extends Node2D
 
-var kickVel
-
 onready var KickableHighlight = get_node("KickableHighlight")
+onready var KickableArea = get_node("KickableArea")
 
-signal kicked
+signal kicked(kickVel)
 
 func showKickableHighlight(value):
 	KickableHighlight.set_visible(value)
 
-func kicked(velocity):
-	kickVel = velocity
-	emit_signal("kicked")
+func kicked(kickVel):
+	emit_signal("kicked", kickVel)

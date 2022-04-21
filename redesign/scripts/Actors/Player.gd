@@ -71,23 +71,24 @@ func _process(_delta):
 	if Input.is_action_just_pressed("jump"):
 		if PlayerBody.is_on_floor():
 			PlayerBody.jump()
-		elif touchingLeftWall:
-			PlayerBody.wallJump(1, kickSpeed)
-		elif touchingRightWall:
-			PlayerBody.wallJump(-1, kickSpeed)
-		elif !kickablesInSight.empty():
-			var averageKickablePos = Vector2.ZERO
-			for kickable in kickablesInSight:
-				averageKickablePos += kickable.get_global_position()
-				var kickVel = (kickable.get_global_position() - global_position).normalized() * kickSpeed
-				kickable.kicked(kickVel)
-				var tempHitLabel = HitLabel.instance()
-				tempHitLabel.set_rotation(-kickVel.angle_to(Vector2(0,1)))
-				tempHitLabel.set_global_position(kickable.get_global_position().linear_interpolate(global_position, 0.8))
-				HitLabels.add_child(tempHitLabel)
-			averageKickablePos /= kickablesInSight.size()
-			PlayerBody.kick((global_position - averageKickablePos).normalized() * kickSpeed)
-			KickAudio.play()
+		else:
+			if !kickablesInSight.empty():
+				var averageKickablePos = Vector2.ZERO
+				for kickable in kickablesInSight:
+					averageKickablePos += kickable.get_global_position()
+					var kickVel = (kickable.get_global_position() - global_position).normalized() * kickSpeed
+					kickable.kicked(kickVel)
+					var tempHitLabel = HitLabel.instance()
+					tempHitLabel.set_rotation(-kickVel.angle_to(Vector2(0,1)))
+					tempHitLabel.set_global_position(kickable.get_global_position().linear_interpolate(global_position, 0.8))
+					HitLabels.add_child(tempHitLabel)
+				averageKickablePos /= kickablesInSight.size()
+				PlayerBody.kick((global_position - averageKickablePos).normalized() * kickSpeed)
+				KickAudio.play()
+			if touchingLeftWall:
+				PlayerBody.wallJump(1, kickSpeed)
+			elif touchingRightWall:
+				PlayerBody.wallJump(-1, kickSpeed)
 	
 	if Input.is_action_pressed("drop"):
 		PlayerBody.set_collision_mask_bit(3, false)
