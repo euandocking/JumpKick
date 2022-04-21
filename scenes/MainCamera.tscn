@@ -2,6 +2,7 @@
 
 [ext_resource path="res://scripts/MainCamera.gd" type="Script" id=1]
 
+
 [node name="MainCamera" type="Camera2D"]
 position = Vector2( 254, 285 )
 current = true

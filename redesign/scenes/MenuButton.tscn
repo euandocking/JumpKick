@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://fonts/KOMIKAX_36.tres" type="DynamicFont" id=1]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.498039, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.490196, 0.490196, 0.490196, 1 )
+
+[node name="MenuButton" type="Button"]
+anchor_right = 1.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/focus = SubResource( 1 )
+custom_styles/normal = SubResource( 2 )
+text = "Button"
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,0 +1,101 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://scenes/tilesets/TileSet.tres" type="TileSet" id=1]
+[ext_resource path="res://redesign/scripts/Level.gd" type="Script" id=2]
+[ext_resource path="res://redesign/scenes/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://sprites/enemy.png" type="Texture" id=4]
+[ext_resource path="res://redesign/scripts/Actors/EnemyBody.gd" type="Script" id=5]
+[ext_resource path="res://redesign/scripts/Actors/Enemy.gd" type="Script" id=6]
+[ext_resource path="res://redesign/scenes/Kickable.tscn" type="PackedScene" id=7]
+[ext_resource path="res://sprites/crate.png" type="Texture" id=8]
+[ext_resource path="res://redesign/scripts/Actors/CrateBody.gd" type="Script" id=9]
+[ext_resource path="res://redesign/scripts/Crate.gd" type="Script" id=10]
+[ext_resource path="res://redesign/scenes/Exit.tscn" type="PackedScene" id=11]
+[ext_resource path="res://redesign/scripts/Enemies.gd" type="Script" id=12]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 32 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 32, 32 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Level" type="Node"]
+script = ExtResource( 2 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+collision_layer = 2
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 65536, 0, 0, 65555, 0, 0, 131072, 0, 0, 131091, 0, 0, 196608, 0, 0, 196627, 0, 0, 262144, 0, 0, 262163, 0, 0, 327680, 0, 0, 327699, 0, 0, 393216, 0, 0, 393235, 0, 0, 458752, 0, 0, 458754, 1, 0, 458755, 1, 0, 458756, 1, 0, 458757, 1, 0, 458771, 0, 0, 524288, 0, 0, 524307, 0, 0, 589824, 0, 0, 589826, 1, 0, 589827, 1, 0, 589828, 1, 0, 589829, 1, 0, 589843, 0, 0, 655360, 0, 0, 655379, 0, 0, 720896, 0, 0, 720897, 0, 0, 720898, 0, 0, 720899, 0, 0, 720900, 0, 0, 720901, 0, 0, 720902, 0, 0, 720903, 0, 0, 720904, 0, 0, 720905, 0, 0, 720906, 0, 0, 720907, 0, 0, 720908, 0, 0, 720909, 0, 0, 720910, 0, 0, 720911, 0, 0, 720912, 0, 0, 720913, 0, 0, 720914, 0, 0, 720915, 0, 0 )
+
+[node name="LevelCamera" type="Camera2D" parent="."]
+position = Vector2( 600, 304 )
+current = true
+
+[node name="Enemies" type="Node" parent="."]
+script = ExtResource( 12 )
+
+[node name="Enemy" type="Node2D" parent="Enemies"]
+position = Vector2( 624, 656 )
+script = ExtResource( 6 )
+
+[node name="Kickable" parent="Enemies/Enemy" instance=ExtResource( 7 )]
+
+[node name="EnemyBody" type="KinematicBody2D" parent="Enemies/Enemy"]
+collision_layer = 16
+collision_mask = 2
+script = ExtResource( 5 )
+
+[node name="EnemyCollision" type="CollisionShape2D" parent="Enemies/Enemy/EnemyBody"]
+shape = SubResource( 1 )
+
+[node name="EnemySprite" type="AnimatedSprite" parent="Enemies/Enemy"]
+frames = SubResource( 2 )
+
+[node name="Blocks" type="Node" parent="."]
+
+[node name="Crate" type="Node2D" parent="Blocks"]
+position = Vector2( 856, 656 )
+script = ExtResource( 10 )
+
+[node name="Kickable" parent="Blocks/Crate" instance=ExtResource( 7 )]
+
+[node name="CrateBody" type="KinematicBody2D" parent="Blocks/Crate"]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource( 9 )
+
+[node name="CrateCollision" type="CollisionShape2D" parent="Blocks/Crate/CrateBody"]
+shape = SubResource( 3 )
+
+[node name="CrateSprite" type="AnimatedSprite" parent="Blocks/Crate"]
+frames = SubResource( 4 )
+
+[node name="Exit" parent="." instance=ExtResource( 11 )]
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 256, 384 )
+
+[connection signal="enemiesDefeated" from="Enemies" to="." method="_on_Enemies_enemiesDefeated"]
+[connection signal="defeated" from="Enemies/Enemy" to="Enemies" method="_on_Enemy_defeated"]
+[connection signal="kicked" from="Enemies/Enemy/Kickable" to="Enemies/Enemy" method="_on_Kickable_kicked"]
+[connection signal="kicked" from="Blocks/Crate/Kickable" to="Blocks/Crate" method="_on_Kickable_kicked"]
+[connection signal="playerEnteredExit" from="Exit" to="." method="_on_Exit_playerEnteredExit"]
+[connection signal="playerLeftExit" from="Exit" to="." method="_on_Exit_playerLeftExit"]
