@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://redesign/scripts/GameController.gd" type="Script" id=1]
 [ext_resource path="res://redesign/scenes/levels/StreetsLevel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://redesign/scenes/MainMenuBox.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/KOMIKAX_36.tres" type="DynamicFont" id=4]
+[ext_resource path="res://redesign/scenes/LevelSelectMenu.tscn" type="PackedScene" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.419608, 0, 0, 1 )
@@ -83,8 +84,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="LevelSelectPopup" type="Popup" parent="MenuCanvas"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="LevelSelectMenuBox" parent="MenuCanvas/LevelSelectPopup" instance=ExtResource( 5 )]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -290.0
+margin_bottom = 290.0
+
 [connection signal="gameOver" from="LevelCanvas/StreetsLevel" to="." method="_on_Level_gameOver"]
 [connection signal="levelCompleted" from="LevelCanvas/StreetsLevel" to="." method="_on_Level_levelCompleted"]
+[connection signal="helpPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_helpPressed"]
+[connection signal="levelSelectPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_levelSelectPressed"]
 [connection signal="quitPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_quitPressed"]
 [connection signal="restartPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_restartPressed"]
 [connection signal="resumePressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_resumePressed"]
+[connection signal="settingsPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_settingsPressed"]
+[connection signal="levelSelected" from="MenuCanvas/LevelSelectPopup/LevelSelectMenuBox" to="." method="_on_LevelSelectMenuBox_levelSelected"]

@@ -55,4 +55,7 @@ text = "Quit"
 
 [connection signal="pressed" from="ScrollContainer/MenuButtons/ResumeButton" to="." method="_on_ResumeButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/MenuButtons/RestartButton" to="." method="_on_RestartButton_pressed"]
+[connection signal="pressed" from="ScrollContainer/MenuButtons/LevelSelectButton" to="." method="_on_LevelSelectButton_pressed"]
+[connection signal="pressed" from="ScrollContainer/MenuButtons/SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="ScrollContainer/MenuButtons/HelpButton" to="." method="_on_HelpButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/MenuButtons/QuitButton" to="." method="_on_QuitButton_pressed"]
