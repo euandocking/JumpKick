@@ -5,11 +5,12 @@ var levelComplete
 var gameOver
 
 var levelFilenames
-var currentLevel
+var currentLevelIndex
 var numLevels
+var Level
+var levelSaveFile
 
 onready var LevelCanvas = get_node("LevelCanvas")
-onready var Level = get_node("LevelCanvas/StreetsLevel")
 onready var MainMenuPopup = get_node("MenuCanvas/MainMenuPopup")
 onready var LevelCompletePopup = get_node("MenuCanvas/LevelCompletePopup")
 onready var GameOverPopup = get_node("MenuCanvas/GameOverPopup")
@@ -21,9 +22,13 @@ func _ready():
 	levelComplete = false
 	gameOver = false
 	
-	currentLevel = 0
 	levelFilenames = ["res://redesign/scenes/levels/StreetsLevel.tscn", "res://redesign/scenes/levels/WarehouseLevel.tscn"]
 	numLevels = levelFilenames.size()
+	
+	levelSaveFile = "user://levelSave.save"
+	
+	loadStartLevel()
+	loadLevel(levelFilenames[currentLevelIndex])
 	
 	activePopup.popup()
 	get_tree().paused = true
@@ -32,8 +37,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		if levelComplete:
 			if !mainMenuOpen:
-				currentLevel = posmod(currentLevel + 1, numLevels)
-				switchLevel(levelFilenames[currentLevel])
+				switchLevel(levelFilenames[posmod(currentLevelIndex + 1, numLevels)])
 	
 	if Input.is_action_just_pressed("exit"):
 		if mainMenuOpen:
@@ -44,6 +48,21 @@ func _process(_delta):
 			get_tree().paused = true
 	if Input.is_action_just_pressed("restart"):
 		restart()
+
+func saveStartLevel():
+	var saveFile = File.new()
+	saveFile.open(levelSaveFile, File.WRITE)
+	saveFile.store_8(currentLevelIndex)
+	saveFile.close()
+
+func loadStartLevel():
+	var saveFile = File.new()
+	if saveFile.file_exists(levelSaveFile):
+		saveFile.open(levelSaveFile, File.READ)
+		currentLevelIndex = saveFile.get_8()
+		saveFile.close()
+	else:
+		currentLevelIndex = 0
 
 func switchPopup(newPopup):
 	activePopup.hide()
@@ -63,9 +82,16 @@ func resume():
 func switchLevel(levelFilename):
 	levelComplete = false
 	gameOver = false
+	
+	currentLevelIndex = levelFilenames.find(levelFilename)
+	
 	activePopup.hide()
 	get_tree().paused = false
 	Level.queue_free()
+	loadLevel(levelFilename)
+	saveStartLevel()
+
+func loadLevel(levelFilename):
 	Level = load(levelFilename).instance()
 	Level.connect("levelCompleted", self, "_on_Level_levelCompleted")
 	Level.connect("gameOver", self, "_on_Level_gameOver")
