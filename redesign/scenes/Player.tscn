@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://sprites/player.png" type="Texture" id=1]
 [ext_resource path="res://sprites/player_kick_ready.png" type="Texture" id=2]
@@ -26,7 +26,10 @@ extents = Vector2( 32, 31 )
 extents = Vector2( 1, 32 )
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 128.0
+radius = 200.0
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 28, 28 )
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 3 )
@@ -71,6 +74,13 @@ stream = ExtResource( 5 )
 
 [node name="HitLabels" type="Node" parent="."]
 
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="HitCollision" type="CollisionShape2D" parent="HitArea"]
+shape = SubResource( 6 )
+
 [connection signal="body_entered" from="RightArea" to="." method="_on_RightArea_body_entered"]
 [connection signal="body_exited" from="RightArea" to="." method="_on_RightArea_body_exited"]
 [connection signal="body_entered" from="LeftArea" to="." method="_on_LeftArea_body_entered"]
@@ -79,3 +89,5 @@ stream = ExtResource( 5 )
 [connection signal="area_exited" from="KickArea" to="." method="_on_KickArea_area_exited"]
 [connection signal="body_entered" from="KickArea" to="." method="_on_KickArea_body_entered"]
 [connection signal="body_exited" from="KickArea" to="." method="_on_KickArea_body_exited"]
+[connection signal="body_entered" from="HitArea" to="." method="_on_HitArea_body_entered"]
+[connection signal="body_exited" from="HitArea" to="." method="_on_HitArea_body_exited"]

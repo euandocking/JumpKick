@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scenes/tilesets/TileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://redesign/scripts/Level.gd" type="Script" id=2]
 [ext_resource path="res://redesign/scenes/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://redesign/scenes/Enemy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://redesign/scenes/Crate.tscn" type="PackedScene" id=5]
+[ext_resource path="res://redesign/scripts/AttackArea.gd" type="Script" id=6]
 [ext_resource path="res://redesign/scenes/Exit.tscn" type="PackedScene" id=11]
 [ext_resource path="res://redesign/scripts/Enemies.gd" type="Script" id=12]
 [ext_resource path="res://sprites/one_way_tile.png" type="Texture" id=13]
@@ -35,6 +36,27 @@ points = PoolVector2Array( 64, 32, 0, 32, 0, 0, 64, 0 )
 } ]
 0/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 262.5, 56 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 84, 48 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 92, 52 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 272, 68 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 396, 48 )
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 205, 48 )
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 528, 48 )
+
 [node name="StreetsLevel" type="Node"]
 script = ExtResource( 2 )
 
@@ -43,7 +65,7 @@ tile_set = ExtResource( 1 )
 collision_layer = 2
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 65, 0, 0, 66, 0, 0, 67, 0, 0, 68, 0, 0, 65536, 0, 0, 65604, 0, 0, 131072, 0, 0, 131140, 0, 0, 131141, 0, 0, 131142, 0, 0, 131143, 0, 0, 196608, 0, 0, 196679, 0, 0, 262144, 0, 0, 262215, 0, 0, 327680, 0, 0, 327725, 0, 0, 327726, 0, 0, 327727, 0, 0, 327728, 0, 0, 327729, 0, 0, 327730, 0, 0, 327731, 0, 0, 327732, 0, 0, 327733, 0, 0, 327734, 0, 0, 327735, 0, 0, 327736, 0, 0, 327737, 0, 0, 327738, 0, 0, 327739, 0, 0, 327751, 0, 0, 327752, 0, 0, 327753, 0, 0, 327754, 0, 0, 393216, 0, 0, 393261, 0, 0, 393268, 0, 0, 393275, 0, 0, 393290, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458797, 0, 0, 458804, 0, 0, 458811, 0, 0, 458826, 0, 0, 524288, 0, 0, 524320, 0, 0, 524321, 0, 0, 524322, 0, 0, 524333, 0, 0, 524336, 0, 0, 524340, 0, 0, 524344, 0, 0, 524347, 0, 0, 524362, 0, 0, 589824, 0, 0, 589826, 1, 0, 589827, 1, 0, 589828, 1, 0, 589829, 1, 0, 589844, 0, 0, 589845, 0, 0, 589846, 0, 0, 589856, 0, 0, 589857, 0, 0, 589858, 0, 0, 589869, 0, 0, 589872, 0, 0, 589876, 0, 0, 589880, 0, 0, 589883, 0, 0, 589898, 0, 0, 655360, 0, 0, 655380, 0, 0, 655381, 0, 0, 655382, 0, 0, 655392, 0, 0, 655393, 0, 0, 655394, 0, 0, 655405, 0, 0, 655408, 0, 0, 655412, 0, 0, 655416, 0, 0, 655419, 0, 0, 655434, 0, 0, 720896, 0, 0, 720916, 0, 0, 720917, 0, 0, 720918, 0, 0, 720928, 0, 0, 720929, 0, 0, 720930, 0, 0, 720941, 0, 0, 720944, 0, 0, 720948, 0, 0, 720952, 0, 0, 720955, 0, 0, 720970, 0, 0, 786432, 0, 0, 786446, 0, 0, 786447, 0, 0, 786448, 0, 0, 786452, 0, 0, 786453, 0, 0, 786454, 0, 0, 786464, 0, 0, 786465, 0, 0, 786466, 0, 0, 786480, 0, 0, 786488, 0, 0, 786506, 0, 0, 851968, 0, 0, 851982, 0, 0, 851983, 0, 0, 851984, 0, 0, 851988, 0, 0, 851989, 0, 0, 851990, 0, 0, 852000, 0, 0, 852001, 0, 0, 852002, 0, 0, 852016, 0, 0, 852024, 0, 0, 852042, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0, 917519, 0, 0, 917520, 0, 0, 917521, 0, 0, 917522, 0, 0, 917523, 0, 0, 917524, 0, 0, 917525, 0, 0, 917526, 0, 0, 917527, 0, 0, 917528, 0, 0, 917529, 0, 0, 917530, 0, 0, 917531, 0, 0, 917532, 0, 0, 917533, 0, 0, 917534, 0, 0, 917535, 0, 0, 917536, 0, 0, 917537, 0, 0, 917538, 0, 0, 917539, 0, 0, 917540, 0, 0, 917541, 0, 0, 917542, 0, 0, 917543, 0, 0, 917544, 0, 0, 917545, 0, 0, 917546, 0, 0, 917547, 0, 0, 917548, 0, 0, 917549, 0, 0, 917550, 0, 0, 917551, 0, 0, 917552, 0, 0, 917553, 0, 0, 917554, 0, 0, 917555, 0, 0, 917556, 0, 0, 917557, 0, 0, 917558, 0, 0, 917559, 0, 0, 917560, 0, 0, 917561, 0, 0, 917562, 0, 0, 917563, 0, 0, 917564, 0, 0, 917565, 0, 0, 917566, 0, 0, 917567, 0, 0, 917568, 0, 0, 917569, 0, 0, 917570, 0, 0, 917571, 0, 0, 917572, 0, 0, 917573, 0, 0, 917574, 0, 0, 917575, 0, 0, 917576, 0, 0, 917577, 0, 0, 917578, 0, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 65, 0, 0, 66, 0, 0, 67, 0, 0, 68, 0, 0, 65536, 0, 0, 65604, 0, 0, 131072, 0, 0, 131140, 0, 0, 131141, 0, 0, 131142, 0, 0, 131143, 0, 0, 196608, 0, 0, 196679, 0, 0, 262144, 0, 0, 262215, 0, 0, 327680, 0, 0, 327725, 0, 0, 327726, 0, 0, 327727, 0, 0, 327728, 0, 0, 327729, 0, 0, 327730, 0, 0, 327731, 0, 0, 327732, 0, 0, 327733, 0, 0, 327734, 0, 0, 327735, 0, 0, 327736, 0, 0, 327737, 0, 0, 327738, 0, 0, 327739, 0, 0, 327751, 0, 0, 327752, 0, 0, 327753, 0, 0, 327754, 0, 0, 393216, 0, 0, 393261, 0, 0, 393268, 0, 0, 393275, 0, 0, 393290, 0, 0, 458752, 0, 0, 458797, 0, 0, 458804, 0, 0, 458811, 0, 0, 458826, 0, 0, 524288, 0, 0, 524320, 0, 0, 524321, 0, 0, 524322, 0, 0, 524333, 0, 0, 524336, 0, 0, 524340, 0, 0, 524344, 0, 0, 524347, 0, 0, 524362, 0, 0, 589824, 0, 0, 589826, 1, 0, 589827, 1, 0, 589828, 1, 0, 589829, 1, 0, 589844, 0, 0, 589845, 0, 0, 589846, 0, 0, 589856, 0, 0, 589857, 0, 0, 589858, 0, 0, 589869, 0, 0, 589872, 0, 0, 589876, 0, 0, 589880, 0, 0, 589883, 0, 0, 589898, 0, 0, 655360, 0, 0, 655380, 0, 0, 655381, 0, 0, 655382, 0, 0, 655392, 0, 0, 655393, 0, 0, 655394, 0, 0, 655405, 0, 0, 655408, 0, 0, 655412, 0, 0, 655416, 0, 0, 655419, 0, 0, 655434, 0, 0, 720896, 0, 0, 720916, 0, 0, 720917, 0, 0, 720918, 0, 0, 720928, 0, 0, 720929, 0, 0, 720930, 0, 0, 720941, 0, 0, 720944, 0, 0, 720948, 0, 0, 720952, 0, 0, 720955, 0, 0, 720970, 0, 0, 786432, 0, 0, 786433, 0, 0, 786434, 0, 0, 786435, 0, 0, 786436, 0, 0, 786446, 0, 0, 786447, 0, 0, 786448, 0, 0, 786452, 0, 0, 786453, 0, 0, 786454, 0, 0, 786464, 0, 0, 786465, 0, 0, 786466, 0, 0, 786480, 0, 0, 786488, 0, 0, 786506, 0, 0, 851968, 0, 0, 851969, 0, 0, 851970, 0, 0, 851971, 0, 0, 851972, 0, 0, 851982, 0, 0, 851983, 0, 0, 851984, 0, 0, 851988, 0, 0, 851989, 0, 0, 851990, 0, 0, 852000, 0, 0, 852001, 0, 0, 852002, 0, 0, 852016, 0, 0, 852024, 0, 0, 852042, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0, 917519, 0, 0, 917520, 0, 0, 917521, 0, 0, 917522, 0, 0, 917523, 0, 0, 917524, 0, 0, 917525, 0, 0, 917526, 0, 0, 917527, 0, 0, 917528, 0, 0, 917529, 0, 0, 917530, 0, 0, 917531, 0, 0, 917532, 0, 0, 917533, 0, 0, 917534, 0, 0, 917535, 0, 0, 917536, 0, 0, 917537, 0, 0, 917538, 0, 0, 917539, 0, 0, 917540, 0, 0, 917541, 0, 0, 917542, 0, 0, 917543, 0, 0, 917544, 0, 0, 917545, 0, 0, 917546, 0, 0, 917547, 0, 0, 917548, 0, 0, 917549, 0, 0, 917550, 0, 0, 917551, 0, 0, 917552, 0, 0, 917553, 0, 0, 917554, 0, 0, 917555, 0, 0, 917556, 0, 0, 917557, 0, 0, 917558, 0, 0, 917559, 0, 0, 917560, 0, 0, 917561, 0, 0, 917562, 0, 0, 917563, 0, 0, 917564, 0, 0, 917565, 0, 0, 917566, 0, 0, 917567, 0, 0, 917568, 0, 0, 917569, 0, 0, 917570, 0, 0, 917571, 0, 0, 917572, 0, 0, 917573, 0, 0, 917574, 0, 0, 917575, 0, 0, 917576, 0, 0, 917577, 0, 0, 917578, 0, 0 )
 
 [node name="OneWayTiles" type="TileMap" parent="."]
 tile_set = SubResource( 6 )
@@ -53,32 +75,170 @@ format = 1
 tile_data = PoolIntArray( 524337, 0, 0, 524338, 0, 0, 524339, 0, 0, 524341, 0, 0, 524342, 0, 0, 524343, 0, 0, 655409, 0, 0, 655410, 0, 0, 655411, 0, 0, 655413, 0, 0, 655414, 0, 0, 655415, 0, 0 )
 
 [node name="LevelCamera" type="Camera2D" parent="."]
-position = Vector2( 600, 304 )
+position = Vector2( 800, 512 )
 current = true
+
+[node name="AttackAreas" type="Node" parent="."]
+
+[node name="AttackArea" type="Area2D" parent="AttackAreas"]
+position = Vector2( 616, 832 )
+collision_layer = 0
+script = ExtResource( 6 )
+
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea"]
+position = Vector2( -8, -8 )
+shape = SubResource( 7 )
+
+[node name="AttackArea2" type="Area2D" parent="AttackAreas"]
+position = Vector2( 616, 832 )
+collision_layer = 0
+script = ExtResource( 6 )
+
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea2"]
+position = Vector2( 372, -120 )
+shape = SubResource( 8 )
+
+[node name="AttackArea3" type="Area2D" parent="AttackAreas"]
+position = Vector2( 616, 832 )
+collision_layer = 0
+script = ExtResource( 6 )
+
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea3"]
+position = Vector2( 760, -316 )
+shape = SubResource( 9 )
+
+[node name="AttackArea4" type="Area2D" parent="AttackAreas"]
+position = Vector2( 616, 832 )
+collision_layer = 0
+script = ExtResource( 6 )
+
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea4"]
+position = Vector2( 1144, -20 )
+shape = SubResource( 10 )
+
+[node name="AttackArea5" type="Area2D" parent="AttackAreas"]
+position = Vector2( 616, 832 )
+collision_layer = 0
+script = ExtResource( 6 )
+
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea5"]
+position = Vector2( 2044, 0 )
+shape = SubResource( 11 )
+
+[node name="AttackArea6" type="Area2D" parent="AttackAreas"]
+position = Vector2( 616, 832 )
+collision_layer = 0
+script = ExtResource( 6 )
+
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea6"]
+position = Vector2( 2741, 0 )
+shape = SubResource( 12 )
+
+[node name="AttackArea7" type="Area2D" parent="AttackAreas"]
+position = Vector2( 616, 832 )
+collision_layer = 0
+script = ExtResource( 6 )
+
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea7"]
+position = Vector2( 3576, 0 )
+shape = SubResource( 13 )
 
 [node name="Enemies" type="Node" parent="."]
 script = ExtResource( 12 )
+PlayerPath = NodePath("../Player")
 
 [node name="Enemy" parent="Enemies" instance=ExtResource( 4 )]
-position = Vector2( 440, 840 )
+position = Vector2( 656, 704 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute")
 
 [node name="Enemy7" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 2680, 832 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea5")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute5")
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 4152, 832 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea7")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute7")
 
 [node name="Enemy3" parent="Enemies" instance=ExtResource( 4 )]
-position = Vector2( 3248, 856 )
+position = Vector2( 3488, 840 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea6")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute6")
 
 [node name="Enemy4" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1872, 840 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea4")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute4")
 
 [node name="Enemy5" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1376, 520 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea3")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute3")
 
 [node name="Enemy6" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 984, 696 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea2")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute2")
+
+[node name="PatrolPaths" type="Node" parent="."]
+
+[node name="PatrolRoute" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute"]
+position = Vector2( 368, 824 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute"]
+position = Vector2( 848, 832 )
+
+[node name="PatrolRoute2" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute2"]
+position = Vector2( 928, 736 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute2"]
+position = Vector2( 1056, 736 )
+
+[node name="PatrolRoute3" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute3"]
+position = Vector2( 1312, 536 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute3"]
+position = Vector2( 1440, 536 )
+
+[node name="PatrolRoute4" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute4"]
+position = Vector2( 1512, 840 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute4"]
+position = Vector2( 2000, 848 )
+
+[node name="PatrolRoute5" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute5"]
+position = Vector2( 2304, 840 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute5"]
+position = Vector2( 3032, 856 )
+
+[node name="PatrolRoute6" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute6"]
+position = Vector2( 3192, 840 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute6"]
+position = Vector2( 3528, 840 )
+
+[node name="PatrolRoute7" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute7"]
+position = Vector2( 3712, 840 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute7"]
+position = Vector2( 4616, 840 )
 
 [node name="Blocks" type="Node" parent="."]
 
@@ -92,8 +252,22 @@ position = Vector2( 2488, 840 )
 position = Vector2( 4704, 864 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 200, 816 )
+position = Vector2( 176, 736 )
 
+[connection signal="body_entered" from="AttackAreas/AttackArea" to="AttackAreas/AttackArea" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea" to="AttackAreas/AttackArea" method="_on_AttackArea_body_exited"]
+[connection signal="body_entered" from="AttackAreas/AttackArea2" to="AttackAreas/AttackArea2" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea2" to="AttackAreas/AttackArea2" method="_on_AttackArea_body_exited"]
+[connection signal="body_entered" from="AttackAreas/AttackArea3" to="AttackAreas/AttackArea3" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea3" to="AttackAreas/AttackArea3" method="_on_AttackArea_body_exited"]
+[connection signal="body_entered" from="AttackAreas/AttackArea4" to="AttackAreas/AttackArea4" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea4" to="AttackAreas/AttackArea4" method="_on_AttackArea_body_exited"]
+[connection signal="body_entered" from="AttackAreas/AttackArea5" to="AttackAreas/AttackArea5" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea5" to="AttackAreas/AttackArea5" method="_on_AttackArea_body_exited"]
+[connection signal="body_entered" from="AttackAreas/AttackArea6" to="AttackAreas/AttackArea6" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea6" to="AttackAreas/AttackArea6" method="_on_AttackArea_body_exited"]
+[connection signal="body_entered" from="AttackAreas/AttackArea7" to="AttackAreas/AttackArea7" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea7" to="AttackAreas/AttackArea7" method="_on_AttackArea_body_exited"]
 [connection signal="enemiesDefeated" from="Enemies" to="." method="_on_Enemies_enemiesDefeated"]
 [connection signal="defeated" from="Enemies/Enemy" to="Enemies" method="_on_Enemy_defeated"]
 [connection signal="defeated" from="Enemies/Enemy7" to="Enemies" method="_on_Enemy_defeated"]
@@ -104,3 +278,4 @@ position = Vector2( 200, 816 )
 [connection signal="defeated" from="Enemies/Enemy6" to="Enemies" method="_on_Enemy_defeated"]
 [connection signal="playerEnteredExit" from="Exit" to="." method="_on_Exit_playerEnteredExit"]
 [connection signal="playerLeftExit" from="Exit" to="." method="_on_Exit_playerLeftExit"]
+[connection signal="died" from="Player" to="." method="_on_Player_died"]

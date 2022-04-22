@@ -12,12 +12,20 @@ var touchingRightWall
 var kickablesInArea
 var kickablesInSight
 
+var enemiesTouching
+
+var state
+
+enum States { ALIVE, DEAD }
+
 onready var PlayerSprite = get_node("PlayerSprite")
 onready var PlayerBody = get_node("PlayerBody")
 onready var KickAudio = get_node("KickAudio")
 onready var HitLabels = get_node("HitLabels")
 
 onready var HitLabel = preload("res://redesign/scenes/HitLabel.tscn")
+
+signal died
 
 func _ready():
 	accelDir = 0
@@ -31,11 +39,29 @@ func _ready():
 	
 	kickablesInArea = []
 	kickablesInSight = []
+	
+	enemiesTouching = []
+	
+	state = States.ALIVE
 
 func _process(_delta):
 	set_position(position + PlayerBody.get_position())
 	PlayerBody.set_position(Vector2.ZERO)
 	
+	match state:
+		States.ALIVE:
+			alive()
+		States.DEAD:
+			pass
+
+func _physics_process(_delta):
+	if !enemiesTouching.empty():
+		if PlayerBody.is_on_floor():
+			die()
+	
+	velocity = PlayerBody.velocity
+
+func alive():
 	#determine accel direction
 	if accelDir == 1:
 		if Input.is_action_just_pressed("left"):
@@ -101,8 +127,14 @@ func _process(_delta):
 	else:
 		PlayerSprite.set_flip_h(true)
 
-func _physics_process(_delta):
-	velocity = PlayerBody.velocity
+func dead():
+	pass
+
+func die():
+	state = States.DEAD
+	accelDir = 0
+	PlayerBody.accelDir = 0
+	emit_signal("died")
 
 func checkKickables():
 	kickablesInSight = []
@@ -110,11 +142,10 @@ func checkKickables():
 	for kickable in kickablesInArea:
 		#set highlight to false
 		kickable.showKickableHighlight(false)
-		var result = space_state.intersect_ray(global_position, kickable.get_global_position(), [PlayerBody])
-		if result.has("collider"):
-			if result.collider == kickable.get_parent().getBody():
-				kickable.showKickableHighlight(true)
-				kickablesInSight.append(kickable)
+		var result = space_state.intersect_ray(global_position, kickable.get_global_position(), [PlayerBody, kickable.get_parent().getBody()])
+		if !result.has("collider"):
+			kickable.showKickableHighlight(true)
+			kickablesInSight.append(kickable)
 
 func _on_RightArea_body_entered(_body):
 	touchingRightWall = true
@@ -131,3 +162,8 @@ func _on_KickArea_area_entered(area):
 func _on_KickArea_area_exited(area):
 	kickablesInArea.erase(area.get_parent())
 	area.get_parent().showKickableHighlight(false)
+
+func _on_HitArea_body_entered(body):
+	enemiesTouching.append(body)
+func _on_HitArea_body_exited(body):
+	enemiesTouching.erase(body)
