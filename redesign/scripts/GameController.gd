@@ -4,6 +4,9 @@ var mainMenuOpen
 var levelComplete
 var gameOver
 
+var currentTime
+var bestTime
+
 var levelFilenames
 var currentLevelIndex
 var numLevels
@@ -16,6 +19,8 @@ onready var LevelCompletePopup = get_node("MenuCanvas/LevelCompletePopup")
 onready var GameOverPopup = get_node("MenuCanvas/GameOverPopup")
 onready var LevelSelectPopup = get_node("MenuCanvas/LevelSelectPopup")
 onready var activePopup = get_node("MenuCanvas/MainMenuPopup")
+onready var CurrentTimeLabel = get_node("MenuCanvas/TimeLabels/CurrentTimeLabel")
+onready var BestTimeLabel = get_node("MenuCanvas/TimeLabels/BestTimeLabel")
 
 func _ready():
 	mainMenuOpen = true
@@ -28,12 +33,15 @@ func _ready():
 	levelSaveFile = "user://levelSave.save"
 	
 	loadStartLevel()
-	loadLevel(levelFilenames[currentLevelIndex])
 	
 	activePopup.popup()
 	get_tree().paused = true
 
-func _process(_delta):
+func _process(delta):
+	if !get_tree().paused:
+		currentTime += delta
+		CurrentTimeLabel.text = "Time: " + String(stepify(currentTime, 0.01))
+	
 	if Input.is_action_just_pressed("ui_accept"):
 		if levelComplete:
 			if !mainMenuOpen:
@@ -63,6 +71,7 @@ func loadStartLevel():
 		saveFile.close()
 	else:
 		currentLevelIndex = 0
+	loadLevel(levelFilenames[currentLevelIndex])
 
 func switchPopup(newPopup):
 	activePopup.hide()
@@ -92,6 +101,21 @@ func switchLevel(levelFilename):
 	saveStartLevel()
 
 func loadLevel(levelFilename):
+	currentTime = 0
+	
+	var levelBestTimeFile = File.new()
+	var bestTimeFileName = "user://" + String(currentLevelIndex) + "bestTime.save"
+	if levelBestTimeFile.file_exists(bestTimeFileName):
+		levelBestTimeFile.open(bestTimeFileName, File.READ)
+		bestTime = levelBestTimeFile.get_float()
+	else:
+		bestTime = -1
+	
+	if bestTime == -1:
+		BestTimeLabel.text = "Best Time: -"
+	else:
+		BestTimeLabel.text = "Best Time: " + String(stepify(bestTime, 0.01))
+	
 	Level = load(levelFilename).instance()
 	Level.connect("levelCompleted", self, "_on_Level_levelCompleted")
 	Level.connect("gameOver", self, "_on_Level_gameOver")
@@ -115,6 +139,12 @@ func _on_MainMenuBox_helpPressed():
 	pass # Replace with function body.
 
 func _on_Level_levelCompleted():
+	if bestTime < 0 or currentTime < bestTime:
+		bestTime = currentTime
+		var levelBestTimeFile = File.new()
+		var bestTimeFileName = "user://" + String(currentLevelIndex) + "bestTime.save"
+		levelBestTimeFile.open(bestTimeFileName, File.WRITE)
+		levelBestTimeFile.store_float(bestTime)
 	levelComplete = true
 	get_tree().paused = true
 	activePopup = LevelCompletePopup

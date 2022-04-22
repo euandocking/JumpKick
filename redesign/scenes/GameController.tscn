@@ -91,6 +91,35 @@ anchor_bottom = 0.5
 margin_top = -290.0
 margin_bottom = 290.0
 
+[node name="TimeLabels" type="VBoxContainer" parent="MenuCanvas"]
+margin_left = 24.0
+margin_top = 16.0
+margin_right = 312.0
+margin_bottom = 112.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentTimeLabel" type="Label" parent="MenuCanvas/TimeLabels"]
+margin_right = 288.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 4 )
+text = "Time: -"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BestTimeLabel" type="Label" parent="MenuCanvas/TimeLabels"]
+margin_top = 45.0
+margin_right = 288.0
+margin_bottom = 86.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "Best Time: -"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="helpPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_helpPressed"]
 [connection signal="levelSelectPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_levelSelectPressed"]
 [connection signal="quitPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_quitPressed"]
