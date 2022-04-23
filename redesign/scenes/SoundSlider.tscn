@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://fonts/KOMIKAX_36.tres" type="DynamicFont" id=1]
+[ext_resource path="res://redesign/scripts/MenuSlider.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.490196, 0.490196, 0.490196, 1 )
+
+[node name="SoundSliderBox" type="VBoxContainer"]
+anchor_right = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundSliderLabel" type="Label" parent="."]
+margin_right = 1600.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Sound Volume"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundSlider" type="HSlider" parent="."]
+margin_top = 45.0
+margin_right = 1600.0
+margin_bottom = 61.0
+min_value = -100.0
+max_value = 0.0
+value = -50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="focus_entered" from="." to="." method="_on_MenuSliderBox_focus_entered"]
+[connection signal="value_changed" from="SoundSlider" to="." method="_on_MenuSlider_value_changed"]

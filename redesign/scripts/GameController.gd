@@ -21,6 +21,8 @@ onready var LevelSelectPopup = get_node("MenuCanvas/LevelSelectPopup")
 onready var activePopup = get_node("MenuCanvas/MainMenuPopup")
 onready var CurrentTimeLabel = get_node("MenuCanvas/TimeLabels/CurrentTimeLabel")
 onready var BestTimeLabel = get_node("MenuCanvas/TimeLabels/BestTimeLabel")
+onready var SettingsMenuPopup = get_node("MenuCanvas/SettingsMenuPopup")
+onready var HelpMenuPopup = get_node("MenuCanvas/HelpMenuPopup")
 
 func _ready():
 	mainMenuOpen = true
@@ -134,9 +136,11 @@ func _on_MainMenuBox_levelSelectPressed():
 	switchPopup(LevelSelectPopup)
 	mainMenuOpen = false
 func _on_MainMenuBox_settingsPressed():
-	pass # Replace with function body.
+	switchPopup(SettingsMenuPopup)
+	mainMenuOpen = false
 func _on_MainMenuBox_helpPressed():
-	pass # Replace with function body.
+	switchPopup(HelpMenuPopup)
+	mainMenuOpen = false
 
 func _on_Level_levelCompleted():
 	if bestTime < 0 or currentTime < bestTime:
