@@ -10,6 +10,7 @@ bg_color = Color( 0.490196, 0.490196, 0.490196, 1 )
 
 [node name="MenuButtons" parent="ScrollContainer" index="0"]
 margin_bottom = 173.0
+script = null
 
 [node name="CreditsLabel" type="Label" parent="ScrollContainer/MenuButtons" index="0"]
 margin_right = 674.0

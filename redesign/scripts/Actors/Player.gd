@@ -59,10 +59,12 @@ func _process(_delta):
 			pass
 
 func _physics_process(_delta):
-	if !enemiesTouching.empty():
-		if PlayerBody.is_on_floor():
-			if !invincible:
-				die()
+	match state:
+		States.ALIVE:
+			if !enemiesTouching.empty():
+				if PlayerBody.is_on_floor():
+					if !invincible:
+						die()
 	
 	velocity = PlayerBody.velocity
 

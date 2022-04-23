@@ -99,6 +99,7 @@ func resume():
 func switchLevel(levelFilename):
 	levelComplete = false
 	gameOver = false
+	mainMenuOpen = false
 	
 	currentLevelIndex = levelFilenames.find(levelFilename)
 	
