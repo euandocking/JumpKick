@@ -8,7 +8,7 @@
 script = ExtResource( 3 )
 
 [node name="MenuButtons" parent="ScrollContainer" index="0"]
-margin_bottom = 245.0
+margin_bottom = 194.0
 
 [node name="StreetsButton" parent="ScrollContainer/MenuButtons" index="0" instance=ExtResource( 2 )]
 anchor_right = 0.0
@@ -36,15 +36,7 @@ margin_right = 674.0
 margin_bottom = 194.0
 text = "Club"
 
-[node name="TowerButton" parent="ScrollContainer/MenuButtons" index="4" instance=ExtResource( 2 )]
-anchor_right = 0.0
-margin_top = 204.0
-margin_right = 674.0
-margin_bottom = 245.0
-text = "Tower"
-
 [connection signal="pressed" from="ScrollContainer/MenuButtons/StreetsButton" to="." method="_on_StreetsButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/MenuButtons/WarehouseButton" to="." method="_on_WarehouseButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/MenuButtons/ApartmentButton" to="." method="_on_ApartmentButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/MenuButtons/ClubButton" to="." method="_on_ClubButton_pressed"]
-[connection signal="pressed" from="ScrollContainer/MenuButtons/TowerButton" to="." method="_on_TowerButton_pressed"]

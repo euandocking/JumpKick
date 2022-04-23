@@ -385,4 +385,5 @@ position = Vector2( 3848, 776 )
 [connection signal="defeated" from="Enemies/Enemy7" to="Enemies" method="_on_Enemy_defeated"]
 [connection signal="defeated" from="Enemies/Enemy8" to="Enemies" method="_on_Enemy_defeated"]
 [connection signal="playerEnteredExit" from="Exit" to="." method="_on_Exit_playerEnteredExit"]
+[connection signal="playerLeftExit" from="Exit" to="." method="_on_Exit_playerLeftExit"]
 [connection signal="died" from="Player" to="." method="_on_Player_died"]

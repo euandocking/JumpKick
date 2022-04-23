@@ -5,6 +5,7 @@ signal restartPressed
 signal levelSelectPressed
 signal settingsPressed
 signal helpPressed
+signal creditsPressed
 signal quitPressed
 
 func _on_ResumeButton_pressed():
@@ -17,5 +18,7 @@ func _on_SettingsButton_pressed():
 	emit_signal("settingsPressed")
 func _on_HelpButton_pressed():
 	emit_signal("helpPressed")
+func _on_CreditsButton_pressed():
+	emit_signal("creditsPressed")
 func _on_QuitButton_pressed():
 	emit_signal("quitPressed")

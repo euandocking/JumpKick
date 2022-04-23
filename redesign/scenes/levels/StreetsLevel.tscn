@@ -37,7 +37,7 @@ points = PoolVector2Array( 64, 32, 0, 32, 0, 0, 64, 0 )
 0/z_index = 0
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 262.5, 56 )
+extents = Vector2( 1087.63, 56 )
 
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 84, 48 )

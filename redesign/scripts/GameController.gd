@@ -25,6 +25,7 @@ onready var CurrentTimeLabel = get_node("MenuCanvas/HUD/CurrentTimeLabel")
 onready var BestTimeLabel = get_node("MenuCanvas/HUD/BestTimeLabel")
 onready var SettingsMenuPopup = get_node("MenuCanvas/SettingsMenuPopup")
 onready var HelpMenuPopup = get_node("MenuCanvas/HelpMenuPopup")
+onready var CreditsMenuPopup = get_node("MenuCanvas/CreditsPopup")
 onready var InvincibilityLabel = get_node("MenuCanvas/HUD/InvincibilityLabel")
 
 func _ready():
@@ -32,7 +33,7 @@ func _ready():
 	levelComplete = false
 	gameOver = false
 	
-	levelFilenames = ["res://redesign/scenes/levels/StreetsLevel.tscn", "res://redesign/scenes/levels/WarehouseLevel.tscn"]
+	levelFilenames = ["res://redesign/scenes/levels/StreetsLevel.tscn", "res://redesign/scenes/levels/WarehouseLevel.tscn", "res://redesign/scenes/levels/ApartmentLevel.tscn", "res://redesign/scenes/levels/ClubLevel.tscn"]
 	numLevels = levelFilenames.size()
 	
 	levelSaveFile = "user://levelSave.save"
@@ -145,6 +146,9 @@ func _on_MainMenuBox_settingsPressed():
 	mainMenuOpen = false
 func _on_MainMenuBox_helpPressed():
 	switchPopup(HelpMenuPopup)
+	mainMenuOpen = false
+func _on_MainMenuBox_creditsPressed():
+	switchPopup(CreditsMenuPopup)
 	mainMenuOpen = false
 
 func _on_Level_levelCompleted():

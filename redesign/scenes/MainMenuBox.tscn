@@ -11,7 +11,7 @@ script = ExtResource( 3 )
 follow_focus = true
 
 [node name="MenuButtons" parent="ScrollContainer" index="0"]
-margin_bottom = 296.0
+margin_bottom = 347.0
 
 [node name="ResumeButton" parent="ScrollContainer/MenuButtons" index="0" instance=ExtResource( 2 )]
 anchor_right = 0.0
@@ -46,11 +46,18 @@ margin_right = 674.0
 margin_bottom = 245.0
 text = "Help"
 
-[node name="QuitButton" parent="ScrollContainer/MenuButtons" index="5" instance=ExtResource( 2 )]
+[node name="CreditsButton" parent="ScrollContainer/MenuButtons" index="5" instance=ExtResource( 2 )]
 anchor_right = 0.0
 margin_top = 255.0
 margin_right = 674.0
 margin_bottom = 296.0
+text = "Credits"
+
+[node name="QuitButton" parent="ScrollContainer/MenuButtons" index="6" instance=ExtResource( 2 )]
+anchor_right = 0.0
+margin_top = 306.0
+margin_right = 674.0
+margin_bottom = 347.0
 text = "Quit"
 
 [connection signal="pressed" from="ScrollContainer/MenuButtons/ResumeButton" to="." method="_on_ResumeButton_pressed"]
@@ -58,4 +65,5 @@ text = "Quit"
 [connection signal="pressed" from="ScrollContainer/MenuButtons/LevelSelectButton" to="." method="_on_LevelSelectButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/MenuButtons/SettingsButton" to="." method="_on_SettingsButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/MenuButtons/HelpButton" to="." method="_on_HelpButton_pressed"]
+[connection signal="pressed" from="ScrollContainer/MenuButtons/CreditsButton" to="." method="_on_CreditsButton_pressed"]
 [connection signal="pressed" from="ScrollContainer/MenuButtons/QuitButton" to="." method="_on_QuitButton_pressed"]
