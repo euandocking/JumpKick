@@ -33,6 +33,7 @@ onready var HelpMenuPopup = get_node("MenuCanvas/HelpMenuPopup")
 onready var CreditsMenuPopup = get_node("MenuCanvas/CreditsPopup")
 onready var InvincibilityLabel = get_node("MenuCanvas/HUD/InvincibilityLabel")
 onready var EnemiesRemainingLabel = get_node("MenuCanvas/HUD/EnemiesRemainingLabel")
+onready var EscapeLabel = get_node("MenuCanvas/HUD/EscapeLabel")
 
 func _ready():
 	mainMenuOpen = true
@@ -65,6 +66,7 @@ func _process(delta):
 		if mainMenuOpen:
 			resume()
 		else:
+			EscapeLabel.text = "Press Esc to play"
 			mainMenuOpen = true
 			switchPopup(MainMenuPopup)
 			get_tree().paused = true
@@ -93,6 +95,7 @@ func switchPopup(newPopup):
 	activePopup.popup()
 
 func resume():
+	EscapeLabel.text = "Press Esc to pause"
 	mainMenuOpen = false
 	if levelComplete:
 		switchPopup(LevelCompletePopup)
@@ -109,6 +112,7 @@ func switchLevel(levelFilename):
 	
 	currentLevelIndex = levelFilenames.find(levelFilename)
 	
+	EscapeLabel.text = "Press Esc to pause"
 	activePopup.hide()
 	get_tree().paused = false
 	Level.queue_free()

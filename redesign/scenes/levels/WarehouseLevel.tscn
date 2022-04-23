@@ -256,7 +256,7 @@ AttackAreaPath = NodePath("../../AttackAreas/AttackArea8")
 PatrolRoutePath = NodePath("../../PatrolRoutes/PatrolRoute6")
 
 [node name="Exit" parent="." instance=ExtResource( 5 )]
-position = Vector2( 3936, 800 )
+position = Vector2( 96, 800 )
 
 [node name="Player" parent="." instance=ExtResource( 7 )]
 position = Vector2( 200, 768 )
