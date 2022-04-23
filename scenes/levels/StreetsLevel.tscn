@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/tilesets/TileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/actors/Player.tscn" type="PackedScene" id=2]
@@ -8,12 +8,10 @@
 [ext_resource path="res://scenes/actors/Enemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/MainCamera.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scripts/EnemyHandler.gd" type="Script" id=8]
-[ext_resource path="res://scenes/LevelGUI.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scripts/Level.gd" type="Script" id=11]
+[ext_resource path="res://scripts/Level.gd" type="Script" id=9]
 
 [node name="StreetsLevel" type="Node2D"]
-script = ExtResource( 11 )
-levelName = "streets"
+script = ExtResource( 9 )
 
 [node name="PlayerBody" parent="." instance=ExtResource( 2 )]
 position = Vector2( 160, 608 )
@@ -39,6 +37,7 @@ position = Vector2( 3840, 560 )
 
 [node name="ExitArea" parent="." instance=ExtResource( 3 )]
 position = Vector2( 5088, 672 )
+script = null
 
 [node name="Enemies" type="Node" parent="."]
 script = ExtResource( 8 )
@@ -51,7 +50,8 @@ position = Vector2( 4656, 632 )
 position = Vector2( 640, 384 )
 PlayerPath = NodePath("../PlayerBody")
 
-[node name="GUI" parent="." instance=ExtResource( 9 )]
-
-[connection signal="enemiesDefeated" from="Enemies" to="ExitArea" method="_on_Enemies_enemiesDefeated"]
+[connection signal="gameOver" from="PlayerBody" to="." method="_on_PlayerBody_gameOver"]
+[connection signal="body_entered" from="ExitArea" to="." method="_on_ExitArea_body_entered"]
+[connection signal="body_exited" from="ExitArea" to="." method="_on_ExitArea_body_exited"]
+[connection signal="enemiesDefeated" from="Enemies" to="." method="_on_Enemies_enemiesDefeated"]
 [connection signal="died" from="Enemies/EnemyBody" to="Enemies" method="_on_EnemyBody_died"]

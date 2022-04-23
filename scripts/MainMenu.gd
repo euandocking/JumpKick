@@ -9,7 +9,8 @@ func _on_SelectLevelButton_pressed():
 
 
 func _on_SettingsButton_pressed():
-	pass # Replace with function body.
+	get_parent().get_node("SettingsPopup").popup()
+	hide()
 
 func _on_HelpButton_pressed():
 	get_parent().get_node("HelpPopup").popup()

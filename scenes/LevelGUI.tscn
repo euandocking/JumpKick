@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://fonts/KOMIKAX_36.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/menus/MainMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/menus/LevelSelectMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/LevelGUI.gd" type="Script" id=4]
 [ext_resource path="res://scenes/menus/HelpPopup.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/menus/SettingsPopup.tscn" type="PackedScene" id=6]
 
 [node name="GUI" type="CanvasLayer"]
 pause_mode = 2
@@ -193,3 +194,6 @@ __meta__ = {
 [node name="LevelSelectMenu" parent="." instance=ExtResource( 3 )]
 
 [node name="HelpPopup" parent="." instance=ExtResource( 5 )]
+
+[node name="SettingsPopup" parent="." instance=ExtResource( 6 )]
+visible = false

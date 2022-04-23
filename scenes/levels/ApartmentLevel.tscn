@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scenes/tilesets/TileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/actors/Player.tscn" type="PackedScene" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://scenes/actors/Enemy.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/MainCamera.tscn" type="PackedScene" id=7]
 [ext_resource path="res://scripts/EnemyHandler.gd" type="Script" id=8]
-[ext_resource path="res://scenes/LevelGUI.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scripts/Level.gd" type="Script" id=10]
 
 [sub_resource type="Curve2D" id=1]
@@ -51,9 +50,8 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 1248, 392, 0, 0, 0, 0, 1656, 408 )
 }
 
-[node name="StreetsLevel" type="Node2D"]
+[node name="ApartmentLevel" type="Node2D"]
 script = ExtResource( 10 )
-levelName = "apartment"
 
 [node name="PlayerBody" parent="." instance=ExtResource( 2 )]
 position = Vector2( 232, 272 )
@@ -206,8 +204,6 @@ curve = SubResource( 7 )
 
 [node name="EnemyPath2" type="Path2D" parent="Paths"]
 curve = SubResource( 8 )
-
-[node name="GUI" parent="." instance=ExtResource( 9 )]
 
 [connection signal="enemiesDefeated" from="Enemies" to="ExitArea" method="_on_Enemies_enemiesDefeated"]
 [connection signal="died" from="Enemies/EnemyBody3" to="Enemies" method="_on_EnemyBody_died"]

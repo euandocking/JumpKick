@@ -49,6 +49,8 @@ enum {
 	DEAD
 }
 
+signal gameOver
+
 func is_dead():
 	return dead
 
@@ -164,10 +166,9 @@ func alive():
 	#check if dead
 	if !enemiesTouching.empty():
 		if is_on_floor():
-			print("lose")
 			dead = true
 			state = DEAD
-			get_parent().gameOver()
+			emit_signal("gameOver")
 	
 	#coyote time reset
 	if is_on_floor():

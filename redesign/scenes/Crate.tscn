@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://redesign/scripts/Crate.gd" type="Script" id=1]
+[ext_resource path="res://redesign/scripts/Actors/CrateBody.gd" type="Script" id=2]
+[ext_resource path="res://sprites/crate.png" type="Texture" id=3]
+[ext_resource path="res://redesign/scenes/Kickable.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 32, 32 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Crate" type="Node2D"]
+position = Vector2( 856, 656 )
+script = ExtResource( 1 )
+
+[node name="Kickable" parent="." instance=ExtResource( 5 )]
+
+[node name="CrateBody" type="KinematicBody2D" parent="."]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource( 2 )
+
+[node name="CrateCollision" type="CollisionShape2D" parent="CrateBody"]
+shape = SubResource( 3 )
+
+[node name="CrateSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 4 )
+
+[connection signal="kicked" from="Kickable" to="." method="_on_Kickable_kicked"]

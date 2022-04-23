@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://redesign/scenes/MenuButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://redesign/scenes/MenuBox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://redesign/scripts/SettingsMenuBox.gd" type="Script" id=3]
+[ext_resource path="res://redesign/scenes/SoundSlider.tscn" type="PackedScene" id=4]
+[ext_resource path="res://redesign/scenes/MusicSliderBox.tscn" type="PackedScene" id=5]
+[ext_resource path="res://fonts/KOMIKAX_36.tres" type="DynamicFont" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.917647, 0.917647, 0.917647, 1 )
+
+[node name="SettingsMenuBox" instance=ExtResource( 2 )]
+script = ExtResource( 3 )
+
+[node name="MenuButtons" parent="ScrollContainer" index="0"]
+margin_bottom = 285.0
+
+[node name="FullscreenToggleButton" parent="ScrollContainer/MenuButtons" index="0" instance=ExtResource( 1 )]
+anchor_right = 0.0
+margin_right = 674.0
+toggle_mode = true
+text = "Toggle Fullscreen"
+
+[node name="SoundSlider" parent="ScrollContainer/MenuButtons" index="1" instance=ExtResource( 4 )]
+anchor_right = 0.0
+margin_top = 51.0
+margin_right = 674.0
+margin_bottom = 112.0
+
+[node name="MusicSliderBox" parent="ScrollContainer/MenuButtons" index="2" instance=ExtResource( 5 )]
+anchor_right = 0.0
+margin_top = 122.0
+margin_right = 674.0
+margin_bottom = 183.0
+
+[node name="AssistModeLabel" type="Label" parent="ScrollContainer/MenuButtons" index="3"]
+margin_top = 193.0
+margin_right = 674.0
+margin_bottom = 234.0
+custom_colors/font_color = Color( 0.160784, 0.160784, 0.160784, 1 )
+custom_fonts/font = ExtResource( 6 )
+custom_styles/normal = SubResource( 1 )
+text = "Assist Mode"
+align = 1
+valign = 1
+
+[node name="InvincibilityButton" parent="ScrollContainer/MenuButtons" index="4" instance=ExtResource( 1 )]
+anchor_right = 0.0
+margin_top = 244.0
+margin_right = 674.0
+margin_bottom = 285.0
+text = "Toggle Invincibility"
+
+[connection signal="pressed" from="ScrollContainer/MenuButtons/FullscreenToggleButton" to="." method="_on_FullscreenToggleButton_pressed"]
+[connection signal="valueChanged" from="ScrollContainer/MenuButtons/SoundSlider" to="." method="_on_MenuSliderBox_valueChanged"]
+[connection signal="valueChanged" from="ScrollContainer/MenuButtons/MusicSliderBox" to="." method="_on_MusicSliderBox_valueChanged"]
+[connection signal="pressed" from="ScrollContainer/MenuButtons/InvincibilityButton" to="." method="_on_InvincibilityButton_pressed"]
