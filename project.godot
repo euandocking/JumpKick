@@ -132,9 +132,10 @@ restart={
 2d_physics/layer_2="solid"
 2d_physics/layer_3="kickable"
 2d_physics/layer_4="oneway"
-2d_physics/layer_5="enemy"
+2d_physics/layer_5="enemyHurt"
 2d_physics/layer_6="block"
 2d_physics/layer_7="stunned"
+2d_physics/layer_8="enemy"
 
 [physics]
 

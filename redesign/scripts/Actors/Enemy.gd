@@ -23,6 +23,8 @@ var Player
 var faceDir
 var playerInArea
 
+var enemiesTouching
+
 onready var EnemyBody = get_node("EnemyBody")
 onready var EnemySprite = get_node("EnemySprite")
 onready var Kickable = get_node("Kickable")
@@ -42,6 +44,8 @@ func _ready():
 		nextPoint = PatrolPoints[patrolIndex]
 	
 	state = States.PATROL
+	
+	enemiesTouching = []
 	
 	patrolAccel = 150
 	attackAccel = 200
@@ -98,6 +102,7 @@ func patrol():
 					var result = space_state.intersect_ray(global_position, Player.get_global_position(), [EnemyBody, Player.PlayerBody])
 					if result.empty():
 						state = States.ATTACK
+						EnemyBody.set_collision_layer_bit(4, true)
 						EnemyBody.maxAccelSpeed = attackMaxSpeed
 						EnemyBody.accel = attackAccel
 						EnemySprite.animation = "attack"
@@ -114,6 +119,8 @@ func attack():
 	if Player:
 		if !playerInArea or Player.state == Player.States.DEAD:
 			state = States.PATROL
+			EnemySprite.animation = "idle"
+			EnemyBody.set_collision_layer_bit(4, false)
 			EnemyBody.maxAccelSpeed = patrolMaxSpeed
 			EnemyBody.accel = patrolAccel
 
@@ -123,6 +130,7 @@ func getBody():
 func stunned():
 	if state != States.DEAD:
 		state = States.STUNNED
+		EnemySprite.z_index = -1
 		StunnedTimer.start(1)
 		EnemyBody.accelDir = 0
 		EnemyBody.set_collision_layer_bit(4, false)
@@ -133,6 +141,7 @@ func _on_Kickable_kicked(kickVel):
 		emit_signal("defeated")
 		EnemyBody.accelDir = 0
 		state = States.DEAD
+		EnemySprite.z_index = -2
 		EnemyBody.set_collision_layer_bit(4, false)
 		EnemySprite.animation = "dead"
 	getBody().velocity = kickVel
@@ -146,7 +155,15 @@ func _on_DetectionArea_body_exited(_body):
 func _on_StunnedTimer_timeout():
 	if state != States.DEAD:
 		state = States.ATTACK
+		EnemySprite.z_index = 0
 		EnemyBody.set_collision_layer_bit(4, true)
 		EnemySprite.animation = "attack"
 		EnemyBody.maxAccelSpeed = attackMaxSpeed
 		EnemyBody.accel = attackAccel
+
+func _on_ClearOutArea_body_entered(body):
+	if body != EnemyBody:
+		enemiesTouching.append(body.get_parent())
+func _on_ClearOutArea_body_exited(body):
+	if body != EnemyBody:
+		enemiesTouching.erase(body.get_parent())

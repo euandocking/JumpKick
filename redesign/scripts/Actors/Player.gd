@@ -18,6 +18,8 @@ var state
 
 enum States { ALIVE, DEAD }
 
+var invincible
+
 onready var PlayerSprite = get_node("PlayerSprite")
 onready var PlayerBody = get_node("PlayerBody")
 onready var KickAudio = get_node("KickAudio")
@@ -43,6 +45,8 @@ func _ready():
 	enemiesTouching = []
 	
 	state = States.ALIVE
+	
+	invincible = false
 
 func _process(_delta):
 	set_position(position + PlayerBody.get_position())
@@ -57,7 +61,8 @@ func _process(_delta):
 func _physics_process(_delta):
 	if !enemiesTouching.empty():
 		if PlayerBody.is_on_floor():
-			die()
+			if !invincible:
+				die()
 	
 	velocity = PlayerBody.velocity
 

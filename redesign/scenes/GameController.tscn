@@ -21,7 +21,7 @@ follow_viewport_enable = true
 [node name="MenuCanvas" type="CanvasLayer" parent="."]
 pause_mode = 2
 
-[node name="TimeLabels" type="VBoxContainer" parent="MenuCanvas"]
+[node name="HUD" type="VBoxContainer" parent="MenuCanvas"]
 margin_left = 24.0
 margin_top = 16.0
 margin_right = 312.0
@@ -30,7 +30,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CurrentTimeLabel" type="Label" parent="MenuCanvas/TimeLabels"]
+[node name="CurrentTimeLabel" type="Label" parent="MenuCanvas/HUD"]
 margin_right = 288.0
 margin_bottom = 41.0
 custom_fonts/font = ExtResource( 4 )
@@ -39,7 +39,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BestTimeLabel" type="Label" parent="MenuCanvas/TimeLabels"]
+[node name="BestTimeLabel" type="Label" parent="MenuCanvas/HUD"]
 margin_top = 45.0
 margin_right = 288.0
 margin_bottom = 86.0
@@ -50,7 +50,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="InvincibilityLabel" type="Label" parent="MenuCanvas/HUD"]
+visible = false
+margin_top = 90.0
+margin_right = 288.0
+margin_bottom = 131.0
+custom_fonts/font = ExtResource( 4 )
+text = "Invincible!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MainMenuPopup" type="Popup" parent="MenuCanvas"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 1
@@ -133,3 +145,4 @@ anchor_bottom = 1.0
 [connection signal="resumePressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_resumePressed"]
 [connection signal="settingsPressed" from="MenuCanvas/MainMenuPopup/MainMenuBox" to="." method="_on_MainMenuBox_settingsPressed"]
 [connection signal="levelSelected" from="MenuCanvas/LevelSelectPopup/LevelSelectMenuBox" to="." method="_on_LevelSelectMenuBox_levelSelected"]
+[connection signal="invincibilityToggled" from="MenuCanvas/SettingsMenuPopup/SettingsMenuBox" to="." method="_on_SettingsMenuBox_invincibilityToggled"]
