@@ -8,6 +8,9 @@ func _process(_delta):
 	set_position(position + CrateBody.get_position())
 	CrateBody.set_position(Vector2.ZERO)
 
+func _physics_process(delta):
+	Kickable.velocity = CrateBody.velocity
+
 func getBody():
 	return CrateBody
 

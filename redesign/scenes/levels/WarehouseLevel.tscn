@@ -152,6 +152,29 @@ script = ExtResource( 9 )
 position = Vector2( 2072, -704 )
 shape = SubResource( 10 )
 
+[node name="Blocks" type="Node" parent="."]
+
+[node name="Crate" parent="Blocks" instance=ExtResource( 6 )]
+position = Vector2( 568, 784 )
+
+[node name="Crate2" parent="Blocks" instance=ExtResource( 6 )]
+position = Vector2( 1288, 1352 )
+
+[node name="Crate3" parent="Blocks" instance=ExtResource( 6 )]
+position = Vector2( 1552, 1352 )
+
+[node name="Crate4" parent="Blocks" instance=ExtResource( 6 )]
+position = Vector2( 1760, 760 )
+
+[node name="Crate5" parent="Blocks" instance=ExtResource( 6 )]
+position = Vector2( 2160, 1040 )
+
+[node name="Crate6" parent="Blocks" instance=ExtResource( 6 )]
+position = Vector2( 1856, 760 )
+
+[node name="Crate7" parent="Blocks" instance=ExtResource( 6 )]
+position = Vector2( 3504, 784 )
+
 [node name="Enemies" type="Node" parent="."]
 script = ExtResource( 4 )
 PlayerPath = NodePath("../Player")
@@ -231,29 +254,6 @@ PatrolRoutePath = NodePath("../../PatrolRoutes/PatrolRoute5")
 position = Vector2( 2168, 192 )
 AttackAreaPath = NodePath("../../AttackAreas/AttackArea8")
 PatrolRoutePath = NodePath("../../PatrolRoutes/PatrolRoute6")
-
-[node name="Blocks" type="Node" parent="."]
-
-[node name="Crate" parent="Blocks" instance=ExtResource( 6 )]
-position = Vector2( 568, 784 )
-
-[node name="Crate2" parent="Blocks" instance=ExtResource( 6 )]
-position = Vector2( 1288, 1352 )
-
-[node name="Crate3" parent="Blocks" instance=ExtResource( 6 )]
-position = Vector2( 1552, 1352 )
-
-[node name="Crate4" parent="Blocks" instance=ExtResource( 6 )]
-position = Vector2( 1760, 760 )
-
-[node name="Crate5" parent="Blocks" instance=ExtResource( 6 )]
-position = Vector2( 2160, 1040 )
-
-[node name="Crate6" parent="Blocks" instance=ExtResource( 6 )]
-position = Vector2( 1856, 760 )
-
-[node name="Crate7" parent="Blocks" instance=ExtResource( 6 )]
-position = Vector2( 3504, 784 )
 
 [node name="Exit" parent="." instance=ExtResource( 5 )]
 position = Vector2( 3936, 800 )

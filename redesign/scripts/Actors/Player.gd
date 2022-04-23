@@ -142,7 +142,7 @@ func checkKickables():
 	for kickable in kickablesInArea:
 		#set highlight to false
 		kickable.showKickableHighlight(false)
-		var result = space_state.intersect_ray(global_position, kickable.get_global_position(), [PlayerBody, kickable.get_parent().getBody()])
+		var result = space_state.intersect_ray(global_position, kickable.get_global_position(), [], 2)
 		if !result.has("collider"):
 			kickable.showKickableHighlight(true)
 			kickablesInSight.append(kickable)

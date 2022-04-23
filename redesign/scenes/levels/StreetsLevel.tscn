@@ -143,6 +143,14 @@ script = ExtResource( 6 )
 position = Vector2( 3576, 0 )
 shape = SubResource( 13 )
 
+[node name="Blocks" type="Node" parent="."]
+
+[node name="Crate" parent="Blocks" instance=ExtResource( 5 )]
+position = Vector2( 1728, 840 )
+
+[node name="Crate2" parent="Blocks" instance=ExtResource( 5 )]
+position = Vector2( 2488, 840 )
+
 [node name="Enemies" type="Node" parent="."]
 script = ExtResource( 12 )
 PlayerPath = NodePath("../Player")
@@ -240,19 +248,11 @@ position = Vector2( 3712, 840 )
 [node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute7"]
 position = Vector2( 4616, 840 )
 
-[node name="Blocks" type="Node" parent="."]
-
-[node name="Crate" parent="Blocks" instance=ExtResource( 5 )]
-position = Vector2( 1728, 840 )
-
-[node name="Crate2" parent="Blocks" instance=ExtResource( 5 )]
-position = Vector2( 2488, 840 )
-
 [node name="Exit" parent="." instance=ExtResource( 11 )]
 position = Vector2( 4704, 864 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 176, 736 )
+position = Vector2( 160, 736 )
 
 [connection signal="body_entered" from="AttackAreas/AttackArea" to="AttackAreas/AttackArea" method="_on_AttackArea_body_entered"]
 [connection signal="body_exited" from="AttackAreas/AttackArea" to="AttackAreas/AttackArea" method="_on_AttackArea_body_exited"]

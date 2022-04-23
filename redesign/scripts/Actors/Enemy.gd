@@ -8,7 +8,7 @@ var attackAccel
 var patrolMaxSpeed
 var	attackMaxSpeed
 
-enum States { PATROL, ATTACK, DEAD }
+enum States { PATROL, ATTACK, STUNNED, DEAD }
 
 export(NodePath) var AttackAreaPath
 export(NodePath) var PatrolRoutePath
@@ -26,6 +26,7 @@ var playerInArea
 onready var EnemyBody = get_node("EnemyBody")
 onready var EnemySprite = get_node("EnemySprite")
 onready var Kickable = get_node("Kickable")
+onready var StunnedTimer = get_node("StunnedTimer")
 
 signal defeated
 
@@ -63,6 +64,8 @@ func _physics_process(_delta):
 	set_position(position + EnemyBody.get_position())
 	EnemyBody.set_position(Vector2.ZERO)
 	
+	Kickable.velocity = EnemyBody.velocity
+	
 	match state:
 		States.ATTACK:
 			attack()
@@ -97,6 +100,7 @@ func patrol():
 						state = States.ATTACK
 						EnemyBody.maxAccelSpeed = attackMaxSpeed
 						EnemyBody.accel = attackAccel
+						EnemySprite.animation = "attack"
 
 func attack():
 	if AttackArea:
@@ -116,6 +120,14 @@ func attack():
 func getBody():
 	return EnemyBody
 
+func stunned():
+	if state != States.DEAD:
+		state = States.STUNNED
+		StunnedTimer.start(1)
+		EnemyBody.accelDir = 0
+		EnemyBody.set_collision_layer_bit(4, false)
+		EnemySprite.animation = "stunned"
+
 func _on_Kickable_kicked(kickVel):
 	if state != States.DEAD:
 		emit_signal("defeated")
@@ -130,3 +142,11 @@ func _on_DetectionArea_body_entered(_body):
 	playerInArea = true
 func _on_DetectionArea_body_exited(_body):
 	playerInArea = false
+
+func _on_StunnedTimer_timeout():
+	if state != States.DEAD:
+		state = States.ATTACK
+		EnemyBody.set_collision_layer_bit(4, true)
+		EnemySprite.animation = "attack"
+		EnemyBody.maxAccelSpeed = attackMaxSpeed
+		EnemyBody.accel = attackAccel
