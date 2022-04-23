@@ -59,10 +59,12 @@ func _process(_delta):
 			pass
 
 func _physics_process(_delta):
-	if !enemiesTouching.empty():
-		if PlayerBody.is_on_floor():
-			if !invincible:
-				die()
+	match state:
+		States.ALIVE:
+			if !enemiesTouching.empty():
+				if PlayerBody.is_on_floor():
+					if !invincible:
+						die()
 	
 	velocity = PlayerBody.velocity
 
@@ -149,8 +151,7 @@ func checkKickables():
 		kickable.showKickableHighlight(false)
 		var result = space_state.intersect_ray(global_position, kickable.get_global_position(), [], 2)
 		if !result.has("collider"):
-			if !PlayerBody.is_on_floor():
-				kickable.showKickableHighlight(true)
+			kickable.showKickableHighlight(true)
 			kickablesInSight.append(kickable)
 
 func _on_RightArea_body_entered(_body):

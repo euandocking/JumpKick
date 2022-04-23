@@ -15,6 +15,11 @@ var levelSaveFile
 
 var invincibility
 
+var numEnemies
+var enemiesBeat
+var allEnemiesBeat
+var playerInExit
+
 onready var LevelCanvas = get_node("LevelCanvas")
 onready var MainMenuPopup = get_node("MenuCanvas/MainMenuPopup")
 onready var LevelCompletePopup = get_node("MenuCanvas/LevelCompletePopup")
@@ -27,6 +32,8 @@ onready var SettingsMenuPopup = get_node("MenuCanvas/SettingsMenuPopup")
 onready var HelpMenuPopup = get_node("MenuCanvas/HelpMenuPopup")
 onready var CreditsMenuPopup = get_node("MenuCanvas/CreditsPopup")
 onready var InvincibilityLabel = get_node("MenuCanvas/HUD/InvincibilityLabel")
+onready var EnemiesRemainingLabel = get_node("MenuCanvas/HUD/EnemiesRemainingLabel")
+onready var EscapeLabel = get_node("MenuCanvas/HUD/EscapeLabel")
 
 func _ready():
 	mainMenuOpen = true
@@ -59,6 +66,7 @@ func _process(delta):
 		if mainMenuOpen:
 			resume()
 		else:
+			EscapeLabel.text = "Press Esc to play"
 			mainMenuOpen = true
 			switchPopup(MainMenuPopup)
 			get_tree().paused = true
@@ -87,6 +95,7 @@ func switchPopup(newPopup):
 	activePopup.popup()
 
 func resume():
+	EscapeLabel.text = "Press Esc to pause"
 	mainMenuOpen = false
 	if levelComplete:
 		switchPopup(LevelCompletePopup)
@@ -99,9 +108,11 @@ func resume():
 func switchLevel(levelFilename):
 	levelComplete = false
 	gameOver = false
+	mainMenuOpen = false
 	
 	currentLevelIndex = levelFilenames.find(levelFilename)
 	
+	EscapeLabel.text = "Press Esc to pause"
 	activePopup.hide()
 	get_tree().paused = false
 	Level.queue_free()
@@ -125,9 +136,17 @@ func loadLevel(levelFilename):
 		BestTimeLabel.text = "Best Time: " + String(stepify(bestTime, 0.01))
 	
 	Level = load(levelFilename).instance()
-	Level.connect("levelCompleted", self, "_on_Level_levelCompleted")
 	Level.connect("gameOver", self, "_on_Level_gameOver")
+	Level.connect("enemyDefeated", self, "_on_Level_enemyDefeated")
+	Level.connect("playerInExit", self, "_on_Level_playerInExit")
+	Level.connect("playerLeftExit", self, "_on_Level_playerLeftExit")
 	LevelCanvas.add_child(Level)
+	
+	playerInExit = false
+	enemiesBeat = 0
+	allEnemiesBeat = false
+	numEnemies = Level.get_node("Enemies").get_children().size()
+	EnemiesRemainingLabel.text = "Bad Guys Beat: 0/" + String(numEnemies)
 
 func restart():
 	switchLevel(Level.get_filename())
@@ -151,7 +170,7 @@ func _on_MainMenuBox_creditsPressed():
 	switchPopup(CreditsMenuPopup)
 	mainMenuOpen = false
 
-func _on_Level_levelCompleted():
+func levelCompleted():
 	if bestTime < 0 or currentTime < bestTime:
 		bestTime = currentTime
 		var levelBestTimeFile = File.new()
@@ -168,6 +187,21 @@ func _on_Level_gameOver():
 	get_tree().paused = true
 	activePopup = GameOverPopup
 	activePopup.popup()
+
+func _on_Level_playerInExit():
+	playerInExit = true
+	if allEnemiesBeat:
+		levelCompleted()
+func _on_Level_playerLeftExit():
+	playerInExit = false
+
+func _on_Level_enemyDefeated():
+	enemiesBeat += 1
+	EnemiesRemainingLabel.text = "Bad Guys Beat: " + String(enemiesBeat) + "/" + String(numEnemies)
+	if enemiesBeat == numEnemies:
+		allEnemiesBeat = true
+		if playerInExit:
+			levelCompleted()
 
 func _on_LevelSelectMenuBox_levelSelected(levelPath):
 	switchLevel(levelPath)

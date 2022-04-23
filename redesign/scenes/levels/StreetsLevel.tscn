@@ -268,7 +268,7 @@ position = Vector2( 160, 736 )
 [connection signal="body_exited" from="AttackAreas/AttackArea6" to="AttackAreas/AttackArea6" method="_on_AttackArea_body_exited"]
 [connection signal="body_entered" from="AttackAreas/AttackArea7" to="AttackAreas/AttackArea7" method="_on_AttackArea_body_entered"]
 [connection signal="body_exited" from="AttackAreas/AttackArea7" to="AttackAreas/AttackArea7" method="_on_AttackArea_body_exited"]
-[connection signal="enemiesDefeated" from="Enemies" to="." method="_on_Enemies_enemiesDefeated"]
+[connection signal="enemyDefeated" from="Enemies" to="." method="_on_Enemies_enemyDefeated"]
 [connection signal="defeated" from="Enemies/Enemy" to="Enemies" method="_on_Enemy_defeated"]
 [connection signal="defeated" from="Enemies/Enemy7" to="Enemies" method="_on_Enemy_defeated"]
 [connection signal="defeated" from="Enemies/Enemy2" to="Enemies" method="_on_Enemy_defeated"]
