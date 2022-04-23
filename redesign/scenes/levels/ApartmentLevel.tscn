@@ -1,16 +1,12 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/tilesets/TileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://redesign/scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://redesign/scenes/Exit.tscn" type="PackedScene" id=3]
 [ext_resource path="res://redesign/scenes/Enemy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://redesign/scenes/Crate.tscn" type="PackedScene" id=5]
-[ext_resource path="res://redesign/scripts/Exit.gd" type="Script" id=6]
-[ext_resource path="res://redesign/scripts/Actors/Player.gd" type="Script" id=7]
 [ext_resource path="res://redesign/scripts/AttackArea.gd" type="Script" id=8]
-[ext_resource path="res://redesign/scripts/Crate.gd" type="Script" id=9]
 [ext_resource path="res://redesign/scripts/Enemies.gd" type="Script" id=10]
-[ext_resource path="res://redesign/scripts/Actors/Enemy.gd" type="Script" id=11]
 [ext_resource path="res://sprites/one_way_tile.png" type="Texture" id=12]
 [ext_resource path="res://redesign/scripts/Level.gd" type="Script" id=13]
 
@@ -113,17 +109,15 @@ shape = SubResource( 10 )
 
 [node name="Blocks" type="Node" parent="."]
 
-[node name="Crate" type="Node2D" parent="Blocks" instance=ExtResource( 5 )]
+[node name="Crate" parent="Blocks" instance=ExtResource( 5 )]
 position = Vector2( -176, 392 )
-script = ExtResource( 9 )
 
 [node name="Enemies" type="Node" parent="."]
 script = ExtResource( 10 )
 PlayerPath = NodePath("../Player")
 
-[node name="Enemy" type="Node2D" parent="Enemies" instance=ExtResource( 4 )]
+[node name="Enemy" parent="Enemies" instance=ExtResource( 4 )]
 position = Vector2( 1376, 136 )
-script = ExtResource( 11 )
 AttackAreaPath = NodePath("../../AttackAreas/AttackArea3")
 PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute8")
 
@@ -256,13 +250,11 @@ position = Vector2( 104, 224 )
 [node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute9"]
 position = Vector2( 296, 224 )
 
-[node name="Exit" type="Node2D" parent="." instance=ExtResource( 3 )]
+[node name="Exit" parent="." instance=ExtResource( 3 )]
 position = Vector2( 96, 928 )
-script = ExtResource( 6 )
 
-[node name="Player" type="Node2D" parent="." instance=ExtResource( 2 )]
+[node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 864, 160 )
-script = ExtResource( 7 )
 
 [connection signal="body_entered" from="AttackAreas/AttackArea" to="AttackAreas/AttackArea" method="_on_AttackArea_body_entered"]
 [connection signal="body_exited" from="AttackAreas/AttackArea" to="AttackAreas/AttackArea" method="_on_AttackArea_body_exited"]
@@ -272,7 +264,7 @@ script = ExtResource( 7 )
 [connection signal="body_exited" from="AttackAreas/AttackArea3" to="AttackAreas/AttackArea3" method="_on_AttackArea_body_exited"]
 [connection signal="body_entered" from="AttackAreas/AttackArea4" to="AttackAreas/AttackArea4" method="_on_AttackArea_body_entered"]
 [connection signal="body_exited" from="AttackAreas/AttackArea4" to="AttackAreas/AttackArea4" method="_on_AttackArea_body_exited"]
-[connection signal="enemiesDefeated" from="Enemies" to="." method="_on_Enemies_enemiesDefeated"]
+[connection signal="enemyDefeated" from="Enemies" to="." method="_on_Enemies_enemyDefeated"]
 [connection signal="defeated" from="Enemies/Enemy" to="Enemies" method="_on_Enemy_defeated"]
 [connection signal="defeated" from="Enemies/Enemy3" to="Enemies" method="_on_Enemy_defeated"]
 [connection signal="defeated" from="Enemies/Enemy4" to="Enemies" method="_on_Enemy_defeated"]

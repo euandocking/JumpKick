@@ -38,19 +38,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CurrentTimeLabel" type="Label" parent="MenuCanvas/HUD"]
+[node name="BestTimeLabel" type="Label" parent="MenuCanvas/HUD"]
 margin_right = 288.0
 margin_bottom = 41.0
-custom_fonts/font = ExtResource( 4 )
-text = "Time: -"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BestTimeLabel" type="Label" parent="MenuCanvas/HUD"]
-margin_top = 45.0
-margin_right = 288.0
-margin_bottom = 86.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_fonts/font = ExtResource( 4 )
 text = "Best Time: -"
@@ -58,11 +48,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="InvincibilityLabel" type="Label" parent="MenuCanvas/HUD"]
-visible = false
+[node name="CurrentTimeLabel" type="Label" parent="MenuCanvas/HUD"]
+margin_top = 45.0
+margin_right = 288.0
+margin_bottom = 86.0
+custom_fonts/font = ExtResource( 4 )
+text = "Time: -"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemiesRemainingLabel" type="Label" parent="MenuCanvas/HUD"]
 margin_top = 90.0
 margin_right = 288.0
 margin_bottom = 131.0
+custom_fonts/font = ExtResource( 4 )
+text = "Bad Guys Beat: /"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InvincibilityLabel" type="Label" parent="MenuCanvas/HUD"]
+visible = false
+margin_top = 135.0
+margin_right = 288.0
+margin_bottom = 176.0
 custom_fonts/font = ExtResource( 4 )
 text = "Invincible!"
 __meta__ = {
