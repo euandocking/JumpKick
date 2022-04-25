@@ -1,0 +1,200 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://fonts/KOMIKAX_36.tres" type="DynamicFont" id=1]
+[ext_resource path="res://old/scenes/menus/MainMenu.tscn" type="PackedScene" id=2]
+[ext_resource path="res://old/scenes/menus/LevelSelectMenu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://old/scripts/LevelGUI.gd" type="Script" id=4]
+[ext_resource path="res://old/scenes/menus/HelpPopup.tscn" type="PackedScene" id=5]
+[ext_resource path="res://old/scenes/menus/SettingsPopup.tscn" type="PackedScene" id=6]
+
+
+[node name="GUI" type="CanvasLayer"]
+pause_mode = 2
+layer = 2
+script = ExtResource( 4 )
+
+[node name="PlayTime" type="Label" parent="."]
+margin_left = 24.0
+margin_top = 16.0
+margin_right = 92.0
+margin_bottom = 57.0
+custom_fonts/font = ExtResource( 1 )
+text = "Time:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BestTime" type="Label" parent="."]
+margin_left = 24.0
+margin_top = 56.0
+margin_right = 92.0
+margin_bottom = 97.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Best Time: -"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOverPopup" type="Popup" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -286.0
+margin_right = 286.0
+margin_bottom = 146.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="GameOverPopup"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -286.0
+margin_top = -74.0
+margin_right = 286.0
+margin_bottom = 74.0
+color = Color( 0.835294, 0.835294, 0.835294, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMessages" type="VBoxContainer" parent="GameOverPopup"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -286.0
+margin_top = -74.0
+margin_right = 286.0
+margin_bottom = 74.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOver" type="Label" parent="GameOverPopup/PopupMessages"]
+margin_right = 572.0
+margin_bottom = 41.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Game Over"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Retry" type="Label" parent="GameOverPopup/PopupMessages"]
+margin_top = 45.0
+margin_right = 572.0
+margin_bottom = 86.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Press Space to Retry"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Label" parent="GameOverPopup/PopupMessages"]
+margin_top = 90.0
+margin_right = 572.0
+margin_bottom = 131.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Press Escape to Quit"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelCompletePopup" type="Popup" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -286.0
+margin_right = 286.0
+margin_bottom = 146.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="LevelCompletePopup"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -286.0
+margin_top = -74.0
+margin_right = 286.0
+margin_bottom = 74.0
+color = Color( 0.835294, 0.835294, 0.835294, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMessages" type="VBoxContainer" parent="LevelCompletePopup"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -286.0
+margin_top = -74.0
+margin_right = 286.0
+margin_bottom = 74.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Complete" type="Label" parent="LevelCompletePopup/PopupMessages"]
+margin_right = 572.0
+margin_bottom = 41.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Level Complete"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Retry" type="Label" parent="LevelCompletePopup/PopupMessages"]
+margin_top = 45.0
+margin_right = 572.0
+margin_bottom = 86.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Press Space to Retry"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Label" parent="LevelCompletePopup/PopupMessages"]
+margin_top = 90.0
+margin_right = 572.0
+margin_bottom = 131.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Press Escape to Quit"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainMenu" parent="." instance=ExtResource( 2 )]
+
+[node name="LevelSelectMenu" parent="." instance=ExtResource( 3 )]
+
+[node name="HelpPopup" parent="." instance=ExtResource( 5 )]
+
+[node name="SettingsPopup" parent="." instance=ExtResource( 6 )]
+visible = false

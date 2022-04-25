@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://fonts/KOMIKAX_36.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scenes/MenuBox.tscn" type="PackedScene" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.490196, 0.490196, 0.490196, 1 )
+
+[node name="CreditsMenuBox" instance=ExtResource( 2 )]
+
+[node name="MenuButtons" parent="ScrollContainer" index="0"]
+margin_bottom = 173.0
+script = null
+
+[node name="CreditsLabel" type="Label" parent="ScrollContainer/MenuButtons" index="0"]
+margin_right = 674.0
+margin_bottom = 173.0
+custom_fonts/font = ExtResource( 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Music - Hip Hop Monopoly by AmenPrdc
+Kick Sound - Fight Kicks A3 by Fesliyan Studios
+Title Font - Turtles by Pixel Sagas
+Text Font - Komika by Apostrophic Lab"
+align = 1
+valign = 1
+autowrap = true
