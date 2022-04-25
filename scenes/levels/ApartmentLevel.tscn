@@ -1,217 +1,266 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://scenes/tilesets/TileSet.tres" type="TileSet" id=1]
-[ext_resource path="res://scenes/actors/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/environmental/Exit.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/environmental/OneWayPlatform.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/actors/Block.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/actors/Enemy.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/MainCamera.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scripts/EnemyHandler.gd" type="Script" id=8]
-[ext_resource path="res://scripts/Level.gd" type="Script" id=10]
+[ext_resource path="res://old/scenes/tilesets/TileSet.tres" type="TileSet" id=1]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Exit.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Crate.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scripts/AttackArea.gd" type="Script" id=8]
+[ext_resource path="res://sprites/one_way_tile.png" type="Texture" id=12]
+[ext_resource path="res://scripts/Level.gd" type="Script" id=13]
 
-[sub_resource type="Curve2D" id=1]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 640, 424, 0, 0, 0, 0, 1064, 424 )
-}
+[sub_resource type="ConvexPolygonShape2D" id=5]
+points = PoolVector2Array( 64, 32, 0, 32, 0, 0, 64, 0 )
 
-[sub_resource type="Curve2D" id=2]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 1256, 864, 0, 0, 0, 0, 1680, 856 )
-}
+[sub_resource type="TileSet" id=6]
+0/name = "one_way_tile.png 0"
+0/texture = ExtResource( 12 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 32 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 5 )
+0/shape_one_way = true
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": true,
+"one_way_margin": 1.0,
+"shape": SubResource( 5 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
 
-[sub_resource type="Curve2D" id=3]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 112, 864, 0, 0, 0, 0, 1112, 856 )
-}
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 1087.63, 56 )
 
-[sub_resource type="Curve2D" id=4]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 672, 1312, 0, 0, 0, 0, 2008, 1312 )
-}
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 994, 52 )
 
-[sub_resource type="Curve2D" id=5]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 1224, 1320, 0, 0, 0, 0, 1688, 1320 )
-}
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 988, 53 )
 
-[sub_resource type="Curve2D" id=6]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -456, 1296, 0, 0, 0, 0, -96, 1296 )
-}
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 126.5, 60 )
 
-[sub_resource type="Curve2D" id=7]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 88, 1304, 0, 0, 0, 0, 472, 1312 )
-}
+[node name="ApartmentLevel" type="Node"]
+script = ExtResource( 13 )
 
-[sub_resource type="Curve2D" id=8]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 1248, 392, 0, 0, 0, 0, 1656, 408 )
-}
-
-[node name="ApartmentLevel" type="Node2D"]
-script = ExtResource( 10 )
-
-[node name="PlayerBody" parent="." instance=ExtResource( 2 )]
-position = Vector2( 232, 272 )
-
-[node name="TileMap" type="TileMap" parent="."]
+[node name="SolidTiles" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 collision_layer = 2
-collision_mask = 2
+collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 65526, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 20, 0, 0, 21, 0, 0, 22, 0, 0, 23, 0, 0, 24, 0, 0, 25, 0, 0, 26, 0, 0, 27, 0, 0, 28, 0, 0, 29, 0, 0, 30, 0, 0, 31, 0, 0, 32, 0, 0, 131062, 0, 0, 65536, 0, 0, 65554, 0, 0, 65563, 0, 0, 65568, 0, 0, 196598, 0, 0, 196599, 0, 0, 196600, 0, 0, 196601, 0, 0, 196602, 0, 0, 196603, 0, 0, 196604, 0, 0, 196605, 0, 0, 196606, 0, 0, 196607, 0, 0, 131072, 0, 0, 131090, 0, 0, 131099, 0, 0, 131104, 0, 0, 262134, 0, 0, 196608, 0, 0, 196614, 0, 0, 196626, 0, 0, 196635, 0, 0, 196640, 0, 0, 327670, 0, 0, 262144, 0, 0, 262150, 0, 0, 262176, 0, 0, 393206, 0, 0, 327712, 0, 0, 458742, 0, 0, 393248, 0, 0, 524278, 0, 0, 458752, 0, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 0, 0, 458762, 0, 0, 458763, 0, 0, 458764, 0, 0, 458765, 0, 0, 458766, 0, 0, 458767, 0, 0, 458768, 0, 0, 458769, 0, 0, 458770, 0, 0, 458771, 0, 0, 458772, 0, 0, 458773, 0, 0, 458774, 0, 0, 458779, 0, 0, 458784, 0, 0, 589814, 0, 0, 524288, 0, 0, 524306, 0, 0, 524315, 0, 0, 524320, 0, 0, 655350, 0, 0, 589824, 0, 0, 589842, 0, 0, 589851, 0, 0, 589856, 0, 0, 720886, 0, 0, 655360, 0, 0, 655378, 0, 0, 655387, 0, 0, 655392, 0, 0, 786422, 0, 0, 720896, 0, 0, 720928, 0, 0, 851958, 0, 0, 786464, 0, 0, 917494, 0, 0, 852000, 0, 0, 983030, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0, 917519, 0, 0, 917520, 0, 0, 917521, 0, 0, 917522, 0, 0, 917527, 0, 0, 917528, 0, 0, 917529, 0, 0, 917530, 0, 0, 917531, 0, 0, 917536, 0, 0, 1048566, 0, 0, 983040, 0, 0, 983058, 0, 0, 983067, 0, 0, 983072, 0, 0, 1114102, 0, 0, 1048576, 0, 0, 1048594, 0, 0, 1048603, 0, 0, 1048608, 0, 0, 1179638, 0, 0, 1114112, 0, 0, 1114130, 0, 0, 1114139, 0, 0, 1114144, 0, 0, 1245174, 0, 0, 1179680, 0, 0, 1310710, 0, 0, 1245216, 0, 0, 1376246, 0, 0, 1310752, 0, 0, 1441782, 0, 0, 1441783, 0, 0, 1441784, 0, 0, 1441785, 0, 0, 1441786, 0, 0, 1441787, 0, 0, 1441788, 0, 0, 1441789, 0, 0, 1441790, 0, 0, 1441791, 0, 0, 1376256, 0, 0, 1376257, 0, 0, 1376258, 0, 0, 1376259, 0, 0, 1376260, 0, 0, 1376261, 0, 0, 1376262, 0, 0, 1376263, 0, 0, 1376264, 0, 0, 1376265, 0, 0, 1376266, 0, 0, 1376267, 0, 0, 1376268, 0, 0, 1376269, 0, 0, 1376270, 0, 0, 1376271, 0, 0, 1376272, 0, 0, 1376273, 0, 0, 1376274, 0, 0, 1376275, 0, 0, 1376276, 0, 0, 1376277, 0, 0, 1376278, 0, 0, 1376279, 0, 0, 1376280, 0, 0, 1376281, 0, 0, 1376282, 0, 0, 1376283, 0, 0, 1376284, 0, 0, 1376285, 0, 0, 1376286, 0, 0, 1376287, 0, 0, 1376288, 0, 0 )
+tile_data = PoolIntArray( -196608, 0, 0, -196607, 0, 0, -196606, 0, 0, -196605, 0, 0, -196604, 0, 0, -196603, 0, 0, -196602, 0, 0, -196601, 0, 0, -196600, 0, 0, -196599, 0, 0, -196598, 0, 0, -196597, 0, 0, -196596, 0, 0, -196595, 0, 0, -196594, 0, 0, -196593, 0, 0, -196592, 0, 0, -196591, 0, 0, -196590, 0, 0, -196589, 0, 0, -196588, 0, 0, -196587, 0, 0, -196586, 0, 0, -196585, 0, 0, -196584, 0, 0, -196583, 0, 0, -196582, 0, 0, -196581, 0, 0, -196580, 0, 0, -196579, 0, 0, -196578, 0, 0, -196577, 0, 0, -196576, 0, 0, -196575, 0, 0, -196574, 0, 0, -196573, 0, 0, -196572, 0, 0, -196571, 0, 0, -196570, 0, 0, -196569, 0, 0, -131072, 0, 0, -131061, 0, 0, -131053, 0, 0, -131039, 0, 0, -131033, 0, 0, -65536, 0, 0, -65525, 0, 0, -65517, 0, 0, -65503, 0, 0, -65497, 0, 0, 0, 0, 0, 11, 0, 0, 19, 0, 0, 33, 0, 0, 39, 0, 0, 65536, 0, 0, 65575, 0, 0, 131072, 0, 0, 131111, 0, 0, 196608, 0, 0, 196619, 0, 0, 196620, 0, 0, 196621, 0, 0, 196622, 0, 0, 196623, 0, 0, 196624, 0, 0, 196625, 0, 0, 196626, 0, 0, 196627, 0, 0, 196628, 0, 0, 196629, 0, 0, 196630, 0, 0, 196631, 0, 0, 196632, 0, 0, 196633, 0, 0, 196634, 0, 0, 196635, 0, 0, 196636, 0, 0, 196640, 0, 0, 196641, 0, 0, 196647, 0, 0, 262144, 0, 0, 262155, 0, 0, 262163, 0, 0, 262177, 0, 0, 262183, 0, 0, 327680, 0, 0, 327691, 0, 0, 327699, 0, 0, 327713, 0, 0, 327719, 0, 0, 393216, 0, 0, 393227, 0, 0, 393235, 0, 0, 393249, 0, 0, 393255, 0, 0, 458752, 0, 0, 458791, 0, 0, 524288, 0, 0, 524327, 0, 0, 589824, 0, 0, 589826, 1, 0, 589827, 1, 0, 589828, 1, 0, 589829, 1, 0, 589835, 0, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 589839, 0, 0, 589840, 0, 0, 589841, 0, 0, 589842, 0, 0, 589843, 0, 0, 589844, 0, 0, 589845, 0, 0, 589846, 0, 0, 589847, 0, 0, 589848, 0, 0, 589849, 0, 0, 589850, 0, 0, 589851, 0, 0, 589855, 0, 0, 589856, 0, 0, 589857, 0, 0, 589858, 0, 0, 589862, 0, 0, 589863, 0, 0, 655360, 0, 0, 655371, 0, 0, 655379, 0, 0, 655393, 0, 0, 655399, 0, 0, 720896, 0, 0, 720907, 0, 0, 720915, 0, 0, 720929, 0, 0, 720935, 0, 0, 786432, 0, 0, 786443, 0, 0, 786451, 0, 0, 786465, 0, 0, 786471, 0, 0, 851968, 0, 0, 852007, 0, 0, 917504, 0, 0, 917543, 0, 0, 983040, 0, 0, 983041, 0, 0, 983042, 0, 0, 983043, 0, 0, 983044, 0, 0, 983045, 0, 0, 983046, 0, 0, 983047, 0, 0, 983048, 0, 0, 983049, 0, 0, 983050, 0, 0, 983051, 0, 0, 983052, 0, 0, 983053, 0, 0, 983054, 0, 0, 983055, 0, 0, 983056, 0, 0, 983057, 0, 0, 983058, 0, 0, 983059, 0, 0, 983060, 0, 0, 983061, 0, 0, 983062, 0, 0, 983063, 0, 0, 983064, 0, 0, 983065, 0, 0, 983066, 0, 0, 983067, 0, 0, 983068, 0, 0, 983069, 0, 0, 983070, 0, 0, 983071, 0, 0, 983072, 0, 0, 983073, 0, 0, 983074, 0, 0, 983075, 0, 0, 983076, 0, 0, 983077, 0, 0, 983078, 0, 0, 983079, 0, 0 )
 
-[node name="blocks" type="Node" parent="."]
+[node name="OneWayTiles" type="TileMap" parent="."]
+tile_set = SubResource( 6 )
+collision_layer = 8
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 196616, 0, 0, 196617, 0, 0, 196618, 0, 0, 196637, 0, 0, 196638, 0, 0, 196639, 0, 0, 196642, 0, 0, 196643, 0, 0, 196644, 0, 0, 196645, 0, 0, 196646, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 589832, 0, 0, 589833, 0, 0, 589834, 0, 0, 589852, 0, 0, 589853, 0, 0, 589854, 0, 0, 589859, 0, 0, 589860, 0, 0, 589861, 0, 0, 720897, 0, 0, 720898, 0, 0, 720899, 0, 0, 786440, 0, 0, 786441, 0, 0, 786442, 0, 0 )
 
-[node name="BlockBody" parent="blocks" instance=ExtResource( 5 )]
-position = Vector2( 416, 416 )
+[node name="LevelCamera" type="Camera2D" parent="."]
+position = Vector2( 1464, 320 )
+current = true
 
-[node name="BlockBody2" parent="blocks" instance=ExtResource( 5 )]
-position = Vector2( 1184, 864 )
+[node name="AttackAreas" type="Node" parent="."]
 
-[node name="BlockBody3" parent="blocks" instance=ExtResource( 5 )]
-position = Vector2( 1760, 416 )
+[node name="AttackArea" type="Area2D" parent="AttackAreas"]
+position = Vector2( -112, 104 )
+collision_layer = 0
+script = ExtResource( 8 )
 
-[node name="BlockBody4" parent="blocks" instance=ExtResource( 5 )]
-position = Vector2( 1760, 864 )
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea"]
+position = Vector2( 1392.75, 800 )
+shape = SubResource( 7 )
 
-[node name="BlockBody5" parent="blocks" instance=ExtResource( 5 )]
-position = Vector2( 544, 1312 )
+[node name="AttackArea2" type="Area2D" parent="AttackAreas"]
+position = Vector2( -112, 104 )
+collision_layer = 0
+script = ExtResource( 8 )
 
-[node name="BlockBody7" parent="blocks" instance=ExtResource( 5 )]
-position = Vector2( -224, 1312 )
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea2"]
+position = Vector2( 1614, 416 )
+shape = SubResource( 8 )
 
-[node name="BlockBody6" parent="blocks" instance=ExtResource( 5 )]
-position = Vector2( 608, 1312 )
+[node name="AttackArea3" type="Area2D" parent="AttackAreas"]
+position = Vector2( -112, 104 )
+collision_layer = 0
+script = ExtResource( 8 )
 
-[node name="platforms" type="Node" parent="."]
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea3"]
+position = Vector2( 1612, 29 )
+shape = SubResource( 9 )
 
-[node name="PlatformBody" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( 1600, 464 )
+[node name="AttackArea4" type="Area2D" parent="AttackAreas"]
+position = Vector2( -112, 104 )
+collision_layer = 0
+script = ExtResource( 8 )
 
-[node name="PlatformBody5" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( -128, 464 )
+[node name="AttackAreaCollision" type="CollisionShape2D" parent="AttackAreas/AttackArea4"]
+position = Vector2( 305.5, 92 )
+shape = SubResource( 10 )
 
-[node name="PlatformBody6" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( -128, 912 )
+[node name="Blocks" type="Node" parent="."]
 
-[node name="PlatformBody7" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( -448, 720 )
-
-[node name="PlatformBody9" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( 320, 1104 )
-
-[node name="PlatformBody10" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( 832, 1104 )
-
-[node name="PlatformBody11" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( 320, 656 )
-
-[node name="PlatformBody12" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( 832, 656 )
-
-[node name="PlatformBody13" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( 768, 208 )
-
-[node name="PlatformBody8" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( -448, 1104 )
-
-[node name="PlatformBody3" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( 1344, 912 )
-
-[node name="PlatformBody4" parent="platforms" instance=ExtResource( 4 )]
-position = Vector2( 1920, 1136 )
-
-[node name="ExitArea" parent="." instance=ExtResource( 3 )]
-position = Vector2( -544, 1312 )
+[node name="Crate" parent="Blocks" instance=ExtResource( 5 )]
+position = Vector2( -176, 392 )
 
 [node name="Enemies" type="Node" parent="."]
-script = ExtResource( 8 )
-PlayerPath = NodePath("../PlayerBody")
 
-[node name="EnemyBody3" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 1352, 384 )
-PatrolPath = NodePath("../../Paths/EnemyPath2")
+[node name="Enemy" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 1376, 136 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea3")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute8")
 
-[node name="EnemyBody4" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 1352, 800 )
-PatrolPath = NodePath("../../Paths/EnemyPath3")
+[node name="Enemy3" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 1704, 136 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea3")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute8")
 
-[node name="EnemyBody5" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 904, 824 )
-PatrolPath = NodePath("../../Paths/EnemyPath4")
+[node name="Enemy4" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 1712, 528 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea2")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute7")
 
-[node name="EnemyBody6" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 400, 816 )
-PatrolPath = NodePath("../../Paths/EnemyPath4")
+[node name="Enemy5" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 1432, 520 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea2")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute6")
 
-[node name="EnemyBody7" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 1312, 1256 )
-PatrolPath = NodePath("../../Paths/EnemyPath6")
+[node name="Enemy6" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 976, 520 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea2")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute5")
 
-[node name="EnemyBody8" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 1568, 1248 )
-PatrolPath = NodePath("../../Paths/EnemyPath6")
+[node name="Enemy7" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 192, 208 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea4")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute9")
 
-[node name="EnemyBody9" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 1888, 1264 )
-PatrolPath = NodePath("../../Paths/EnemyPath5")
+[node name="Enemy8" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 536, 912 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute")
 
-[node name="EnemyBody10" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( -392, 1280 )
-PatrolPath = NodePath("../../Paths/EnemyPath7")
+[node name="Enemy9" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 864, 912 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute2")
 
-[node name="EnemyBody11" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 392, 1280 )
-PatrolPath = NodePath("../../Paths/EnemyPath8")
+[node name="Enemy10" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 1536, 920 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute3")
 
-[node name="EnemyBody" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 1064, 384 )
-PatrolPath = NodePath("../../Paths/EnemyPath")
+[node name="Enemy11" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 1920, 912 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute3")
 
-[node name="EnemyBody2" parent="Enemies" instance=ExtResource( 6 )]
-position = Vector2( 616, 384 )
-PatrolPath = NodePath("../../Paths/EnemyPath")
+[node name="Enemy12" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 2328, 912 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute4")
 
-[node name="MainCamera" parent="." instance=ExtResource( 7 )]
-position = Vector2( 664, 688 )
-PlayerPath = NodePath("../PlayerBody")
+[node name="Enemy2" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( 1544, 136 )
+AttackAreaPath = NodePath("../../AttackAreas/AttackArea3")
+PatrolRoutePath = NodePath("../../PatrolPaths/PatrolRoute8")
 
-[node name="Paths" type="Node" parent="."]
+[node name="PatrolPaths" type="Node" parent="."]
 
-[node name="EnemyPath" type="Path2D" parent="Paths"]
-curve = SubResource( 1 )
+[node name="PatrolRoute" type="Node" parent="PatrolPaths"]
 
-[node name="EnemyPath3" type="Path2D" parent="Paths"]
-curve = SubResource( 2 )
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute"]
+position = Vector2( 184, 920 )
 
-[node name="EnemyPath4" type="Path2D" parent="Paths"]
-curve = SubResource( 3 )
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute"]
+position = Vector2( 720, 920 )
 
-[node name="EnemyPath5" type="Path2D" parent="Paths"]
-curve = SubResource( 4 )
+[node name="PatrolRoute2" type="Node" parent="PatrolPaths"]
 
-[node name="EnemyPath6" type="Path2D" parent="Paths"]
-curve = SubResource( 5 )
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute2"]
+position = Vector2( 792, 920 )
 
-[node name="EnemyPath7" type="Path2D" parent="Paths"]
-curve = SubResource( 6 )
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute2"]
+position = Vector2( 1224, 912 )
 
-[node name="EnemyPath8" type="Path2D" parent="Paths"]
-curve = SubResource( 7 )
+[node name="PatrolRoute3" type="Node" parent="PatrolPaths"]
 
-[node name="EnemyPath2" type="Path2D" parent="Paths"]
-curve = SubResource( 8 )
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute3"]
+position = Vector2( 1344, 920 )
 
-[connection signal="enemiesDefeated" from="Enemies" to="ExitArea" method="_on_Enemies_enemiesDefeated"]
-[connection signal="died" from="Enemies/EnemyBody3" to="Enemies" method="_on_EnemyBody_died"]
-[connection signal="died" from="Enemies/EnemyBody4" to="Enemies" method="_on_EnemyBody_died"]
-[connection signal="died" from="Enemies/EnemyBody5" to="Enemies" method="_on_EnemyBody_died"]
-[connection signal="died" from="Enemies/EnemyBody6" to="Enemies" method="_on_EnemyBody_died"]
-[connection signal="died" from="Enemies/EnemyBody7" to="Enemies" method="_on_EnemyBody_died"]
-[connection signal="died" from="Enemies/EnemyBody8" to="Enemies" method="_on_EnemyBody_died"]
-[connection signal="died" from="Enemies/EnemyBody9" to="Enemies" method="_on_EnemyBody_died"]
-[connection signal="died" from="Enemies/EnemyBody10" to="Enemies" method="_on_EnemyBody_died"]
-[connection signal="died" from="Enemies/EnemyBody11" to="Enemies" method="_on_EnemyBody_died"]
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute3"]
+position = Vector2( 2040, 912 )
+
+[node name="PatrolRoute4" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute4"]
+position = Vector2( 376, 912 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute4"]
+position = Vector2( 2368, 912 )
+
+[node name="PatrolRoute5" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute5"]
+position = Vector2( 568, 536 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute5"]
+position = Vector2( 1168, 536 )
+
+[node name="PatrolRoute6" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute6"]
+position = Vector2( 1344, 536 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute6"]
+position = Vector2( 1896, 536 )
+
+[node name="PatrolRoute7" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute7"]
+position = Vector2( 1360, 536 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute7"]
+position = Vector2( 2376, 520 )
+
+[node name="PatrolRoute8" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute8"]
+position = Vector2( 1304, 152 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute8"]
+position = Vector2( 2352, 144 )
+
+[node name="PatrolRoute9" type="Node" parent="PatrolPaths"]
+
+[node name="PatrolPoint" type="Node2D" parent="PatrolPaths/PatrolRoute9"]
+position = Vector2( 104, 224 )
+
+[node name="PatrolPoint2" type="Node2D" parent="PatrolPaths/PatrolRoute9"]
+position = Vector2( 296, 224 )
+
+[node name="Exit" parent="." instance=ExtResource( 3 )]
+position = Vector2( 96, 928 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 864, 160 )
+
+[connection signal="body_entered" from="AttackAreas/AttackArea" to="AttackAreas/AttackArea" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea" to="AttackAreas/AttackArea" method="_on_AttackArea_body_exited"]
+[connection signal="body_entered" from="AttackAreas/AttackArea2" to="AttackAreas/AttackArea2" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea2" to="AttackAreas/AttackArea2" method="_on_AttackArea_body_exited"]
+[connection signal="body_entered" from="AttackAreas/AttackArea3" to="AttackAreas/AttackArea3" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea3" to="AttackAreas/AttackArea3" method="_on_AttackArea_body_exited"]
+[connection signal="body_entered" from="AttackAreas/AttackArea4" to="AttackAreas/AttackArea4" method="_on_AttackArea_body_entered"]
+[connection signal="body_exited" from="AttackAreas/AttackArea4" to="AttackAreas/AttackArea4" method="_on_AttackArea_body_exited"]
+[connection signal="playerEnteredExit" from="Exit" to="." method="_on_Exit_playerEnteredExit"]
+[connection signal="playerLeftExit" from="Exit" to="." method="_on_Exit_playerLeftExit"]
+[connection signal="died" from="Player" to="." method="_on_Player_died"]
