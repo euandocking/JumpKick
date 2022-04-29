@@ -8,6 +8,7 @@ var accel
 var groundDecel
 var airDecel
 var maxAccelSpeed
+var maxFallSpeed
 
 #on start
 func _ready():
@@ -23,6 +24,7 @@ func _ready():
 	groundDecel = 100
 	airDecel = 25
 	maxAccelSpeed = 800
+	maxFallSpeed = 2000
 
 #basic move function
 func move():
@@ -47,6 +49,9 @@ func move():
 	
 	#apply gravity
 	velocity.y += grav
+	#apply max fall speed
+	if velocity.y > maxFallSpeed:
+		velocity.y = maxFallSpeed
 	
 	#apply velocity
 	velocity = move_and_slide(velocity, Vector2.UP)

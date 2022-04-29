@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mixkit-falling-on-undergrowth-390.wav-995d932d7c25decdb7361104d5a24374.sample"
+
+[deps]
+
+source_file="res://audio/mixkit-falling-on-undergrowth-390.wav"
+dest_files=[ "res://.import/mixkit-falling-on-undergrowth-390.wav-995d932d7c25decdb7361104d5a24374.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -10,15 +10,15 @@ bg_color = Color( 0.490196, 0.490196, 0.490196, 1 )
 
 [node name="MenuButtons" parent="ScrollContainer" index="0"]
 margin_right = 662.0
-margin_bottom = 437.0
+margin_bottom = 481.0
 script = null
 
 [node name="Label" type="Label" parent="ScrollContainer/MenuButtons" index="0"]
 margin_right = 662.0
-margin_bottom = 437.0
+margin_bottom = 481.0
 custom_fonts/font = ExtResource( 2 )
 custom_styles/normal = SubResource( 1 )
-text = "Press A and D to move left and right
+text = "Press A and D or Arrow Keys to move left and right
 Press Space while on the ground to jump
 Press Space while on a wall to wall jump
 Press Space while in the air and near enemies to kick them

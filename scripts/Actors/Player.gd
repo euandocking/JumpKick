@@ -21,6 +21,7 @@ onready var PlayerSprite = get_node("PlayerSprite")
 onready var PlayerBody = get_node("PlayerBody")
 onready var KickAudio = get_node("KickAudio")
 onready var HitLabels = get_node("HitLabels")
+onready var PlayerInput = get_node("PlayerInput")
 
 #hit label reference
 onready var HitLabel = preload("res://scenes/HitLabel.tscn")
@@ -58,7 +59,7 @@ func _process(_delta):
 		States.ALIVE:
 			alive()
 		States.DEAD:
-			#no functionality but state machine used for potential future extension
+			#no functionality currently but state machine used for potential future extension
 			pass
 
 #physics update
@@ -75,34 +76,13 @@ func _physics_process(_delta):
 					if !invincible:
 						#game over
 						die()
-	#store velocity from physics body
+	#get velocity from physics body
 	velocity = PlayerBody.velocity
 
 #alive state
 func alive():
-	#determine accel direction based on player input
-	#always favours the last key pressed
-	if accelDir == 1:
-		if Input.is_action_just_pressed("left"):
-			accelDir = -1
-		elif !Input.is_action_pressed("right"):
-			if Input.is_action_pressed("left"):
-				accelDir = -1
-			else:
-				accelDir = 0
-	elif accelDir == -1:
-		if Input.is_action_just_pressed("right"):
-			accelDir = 1
-		elif !Input.is_action_pressed("left"):
-			if Input.is_action_pressed("right"):
-				accelDir = 1
-			else:
-				accelDir = 0
-	else:
-		if Input.is_action_pressed("right"):
-			accelDir = 1
-		elif Input.is_action_pressed("left"):
-			accelDir = -1
+	#get direction to accelerate from input component
+	accelDir = PlayerInput.accelDir
 	
 	#passes acceleration direction to player
 	PlayerBody.accelDir = accelDir
@@ -110,6 +90,9 @@ func alive():
 	#set face direction
 	if accelDir != 0:
 		faceDir = accelDir
+	
+	#update animation component's facing direction
+	PlayerSprite.faceDir = faceDir
 	
 	#determine kickables in sight
 	checkKickables()
@@ -123,32 +106,9 @@ func alive():
 		else:
 			#else if there's something to kick
 			if !kickablesInSight.empty():
-				var averageKickablePos = Vector2.ZERO
-				#for each thing to be kicked
-				for kickable in kickablesInSight:
-					#update the average position of the kickables
-					averageKickablePos += kickable.get_global_position()
-					#calculate the velocity based on the position difference
-					var kickVel = (kickable.get_global_position() - global_position).normalized() * kickSpeed
-					#kick the kickable
-					kickable.kicked(kickVel)
-					#create a hit label
-					var tempHitLabel = HitLabel.instance()
-					#rotate the label based on the applied velocity
-					tempHitLabel.set_rotation(-kickVel.angle_to(Vector2(0,1)))
-					#place the label between the player and the kickable
-					tempHitLabel.set_global_position(kickable.get_global_position().linear_interpolate(global_position, 0.8))
-					#add the label to the scene
-					HitLabels.add_child(tempHitLabel)
-				#determine the average position of everything that was kicked
-				averageKickablePos /= kickablesInSight.size()
-				#apply the average kick velocity to the player in the opposite direction
-				PlayerBody.kick((global_position - averageKickablePos).normalized() * kickSpeed)
-				#play the kick sound
-				KickAudio.play()
+				kick()
 			#if touching walls jump off them
 			#overwrites kick velocity so player has predictable movement
-			#while still kicking objects
 			if touchingLeftWall:
 				PlayerBody.wallJump(1, kickSpeed)
 			elif touchingRightWall:
@@ -161,12 +121,32 @@ func alive():
 	else:
 		#turn on one way platform collision
 		PlayerBody.set_collision_mask_bit(3, true)
-	
-	#animate sprite to face last accelerating direction
-	if faceDir == 1:
-		PlayerSprite.set_flip_h(false)
-	else:
-		PlayerSprite.set_flip_h(true)
+
+#kicks the player off nearby objects
+func kick():
+	var averageKickablePos = Vector2.ZERO
+	#for each thing to be kicked
+	for kickable in kickablesInSight:
+		#update the average position of the kickables
+		averageKickablePos += kickable.get_global_position()
+		#calculate the velocity based on the position difference
+		var kickVel = (kickable.get_global_position() - global_position).normalized() * kickSpeed
+		#kick the kickable
+		kickable.kicked(kickVel)
+		#create a hit label
+		var tempHitLabel = HitLabel.instance()
+		#rotate the label based on the applied velocity
+		tempHitLabel.set_rotation(-kickVel.angle_to(Vector2(0,1)))
+		#place the label between the player and the kickable
+		tempHitLabel.set_global_position(kickable.get_global_position().linear_interpolate(global_position, 0.8))
+		#add the label to the scene
+		HitLabels.add_child(tempHitLabel)
+	#determine the average position of everything that was kicked
+	averageKickablePos /= kickablesInSight.size()
+	#apply the average kick velocity to the player in the opposite direction
+	PlayerBody.kick((global_position - averageKickablePos).normalized() * kickSpeed)
+	#play the kick sound
+	KickAudio.play()
 
 #switches to dead state
 func die():

@@ -71,6 +71,7 @@ func accelerate():
 	else:
 		#smooth out velocity
 		#takes some control away from player to improve game feel
+		#inspired by wall jump in https://www.youtube.com/watch?v=STyY26a_dPY&t=143s
 		velocity = velocity.linear_interpolate(newVel, 0.5)
 
 #makes the player jump
