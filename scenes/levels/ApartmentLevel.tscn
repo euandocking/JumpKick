@@ -65,7 +65,7 @@ format = 1
 tile_data = PoolIntArray( 196616, 0, 0, 196617, 0, 0, 196618, 0, 0, 196637, 0, 0, 196638, 0, 0, 196639, 0, 0, 196642, 0, 0, 196643, 0, 0, 196644, 0, 0, 196645, 0, 0, 196646, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0, 589832, 0, 0, 589833, 0, 0, 589834, 0, 0, 589852, 0, 0, 589853, 0, 0, 589854, 0, 0, 589859, 0, 0, 589860, 0, 0, 589861, 0, 0, 720897, 0, 0, 720898, 0, 0, 720899, 0, 0, 786440, 0, 0, 786441, 0, 0, 786442, 0, 0 )
 
 [node name="LevelCamera" type="Camera2D" parent="."]
-position = Vector2( 1464, 320 )
+position = Vector2( 1528, -752 )
 current = true
 
 [node name="AttackAreas" type="Node" parent="."]
@@ -109,7 +109,16 @@ shape = SubResource( 10 )
 [node name="Blocks" type="Node" parent="."]
 
 [node name="Crate" parent="Blocks" instance=ExtResource( 5 )]
-position = Vector2( -176, 392 )
+position = Vector2( 1264, 912 )
+
+[node name="Crate2" parent="Blocks" instance=ExtResource( 5 )]
+position = Vector2( 1584, 528 )
+
+[node name="Crate3" parent="Blocks" instance=ExtResource( 5 )]
+position = Vector2( 1512, 120 )
+
+[node name="Crate4" parent="Blocks" instance=ExtResource( 5 )]
+position = Vector2( 784, 152 )
 
 [node name="Enemies" type="Node" parent="."]
 

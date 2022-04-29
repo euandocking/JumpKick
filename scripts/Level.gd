@@ -42,6 +42,5 @@ func _on_Player_died():
 
 #enemy defeated signal
 func _on_Enemy_defeated():
-	print("Enemy defeated")
 	#emit the signal further up
 	emit_signal("enemyDefeated")
