@@ -150,13 +150,14 @@ func kick():
 
 #switches to dead state
 func die():
-	#switch state
-	state = States.DEAD
-	#stop accelerating
-	accelDir = 0
-	PlayerBody.accelDir = 0
-	#emit died signal
-	emit_signal("died")
+	if(!invincible):	
+		#switch state
+		state = States.DEAD
+		#stop accelerating
+		accelDir = 0
+		PlayerBody.accelDir = 0
+		#emit died signal
+		emit_signal("died")
 
 #checks which objects are within sight to kick
 #prevents object being kickable through walls
